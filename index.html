@@ -1,1 +1,5360 @@
-fghjm,.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#151816">
+  <meta name="description" content="AssessIQ — Assessment and Evaluation Platform">
+  <title>AssessIQ — Assessment & Evaluation Platform</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23151816'/%3E%3Cpath d='M15 45 28 17h8l13 28h-9l-3-7H27l-3 7zM30 32h5l-2.5-7z' fill='%23e3a83b'/%3E%3C/svg%3E">
+
+
+  <style>
+    :root {
+      --charcoal: #151816;
+      --charcoal2: #1c211d;
+      --charcoal3: #242a25;
+      --paper: #fbfaf7;
+      --warm: #f0ece3;
+      --warm2: #e4ded2;
+      --ink: #171a18;
+      --muted: #626a63;
+      --muted2: #899189;
+      --white: #fff;
+      --line: #d9d4ca;
+      --line-dark: #373e38;
+      --amber: #e3a83b;
+      --amber2: #f2c66d;
+      --emerald: #36a66f;
+      --emerald2: #79d5a3;
+      --danger: #d9675c;
+      --container: calc(100% - 64px);
+      --shadow: 0 22px 55px rgba(15, 19, 16, .13);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper)
+    }
+
+    body {
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "IBM Plex Sans", Arial, sans-serif;
+      line-height: 1.55;
+      overflow-x: clip;
+    }
+
+    body.modal-open {
+      overflow: hidden
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    ::selection {
+      background: var(--amber);
+      color: var(--charcoal);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--amber);
+      outline-offset: 3px;
+    }
+
+    .site-container {
+      width: var(--container);
+      margin-inline: auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: var(--amber);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow:before,
+    .eyebrow:after {
+      content: "";
+      width: 25px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .mono {
+      font-family: "IBM Plex Mono", monospace
+    }
+
+    .green {
+      color: var(--emerald) !important
+    }
+
+    .amber {
+      color: var(--amber) !important
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(15, 19, 16, 0.05);
+      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(15, 19, 16, 0.1);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(15, 19, 16, 0.05);
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--charcoal);
+      border-color: rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      background: var(--amber2);
+      box-shadow: 0 8px 20px rgba(227, 168, 59, .3);
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--line-dark);
+      background: #ffffff;
+      color: var(--charcoal);
+    }
+
+    .btn-outline:hover {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(21, 24, 22, 0.2);
+    }
+
+    .btn-dark {
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .btn-dark:hover {
+      background: #292e2a
+    }
+
+    .btn-light-outline {
+      border-color: #596159;
+      color: #fff;
+      background: transparent;
+    }
+
+    .btn-light-outline:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #4b524c;
+      border-radius: 8px;
+      background: var(--charcoal);
+      color: var(--amber);
+    }
+
+    .brand-mark svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .brand-text {
+      color: var(--charcoal);
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -.045em;
+    }
+
+    .brand-text span {
+      color: #737a73;
+      font-weight: 500
+    }
+
+    .dark-brand .brand-text {
+      color: #fff
+    }
+
+    .dark-brand .brand-text span {
+      color: #aeb6ae
+    }
+
+    /* NAV */
+    .public-nav {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: rgba(251, 250, 247, .97);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-logo-img {
+      height: 50px;
+      width: auto;
+      max-width: 210px;
+      object-fit: contain;
+      display: block;
+      transition: transform .25s ease;
+    }
+
+    .brand:hover .brand-logo-img {
+      transform: scale(1.03);
+    }
+
+    .nav-inner {
+      width: var(--container);
+      min-height: 76px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nav-link {
+      position: relative;
+      min-height: 42px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      color: #4d554e;
+      font-size: 13.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      border-radius: 6px;
+      transition: all .2s ease;
+    }
+
+    .nav-link:after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 2px;
+      height: 3px;
+      background: var(--amber);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .nav-link:hover {
+      color: var(--charcoal);
+      background: rgba(21, 24, 22, 0.04);
+    }
+
+    .nav-link.active {
+      color: var(--charcoal);
+      font-weight: 700;
+      background: rgba(227, 168, 59, 0.15);
+    }
+
+    .nav-link.active:after {
+      transform: scaleX(1);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--charcoal);
+    }
+
+    .mobile-menu-button svg {
+      width: 21px
+    }
+
+    .mobile-nav {
+      display: none;
+      padding: 12px 18px 20px;
+      background: #fff;
+      border-top: 1px solid var(--line);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .mobile-nav.open {
+      display: block;
+      animation: menuIn .25s ease both;
+    }
+
+    .mobile-nav a[data-route] {
+      min-height: 46px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #efebe3;
+      color: #3f4640;
+      font-size: 14.5px;
+      font-weight: 600;
+      border-radius: 6px;
+      margin-bottom: 3px;
+      transition: all .2s ease;
+    }
+
+    .mobile-nav a[data-route]:hover {
+      background: rgba(21, 24, 22, 0.04);
+      color: var(--charcoal);
+    }
+
+    .mobile-nav a[data-route].active {
+      color: var(--charcoal);
+      font-weight: 700;
+      background: rgba(227, 168, 59, 0.16);
+      border-left: 4px solid var(--amber);
+      padding-left: 16px;
+    }
+
+    .mobile-nav-actions {
+      margin-top: 14px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-nav-actions .btn {
+      width: 100%;
+      min-height: 46px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 7px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    }
+
+    .mobile-nav-actions .btn-outline {
+      border: 1.5px solid var(--line-dark);
+      color: var(--charcoal);
+      background: #fff;
+    }
+
+    .mobile-nav-actions .btn-outline:hover {
+      background: var(--charcoal);
+      color: #fff;
+      border-color: var(--charcoal);
+    }
+
+    .mobile-nav-actions .btn-primary {
+      background: var(--amber);
+      color: var(--charcoal);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+    }
+
+    .mobile-nav-actions .btn-primary:hover {
+      background: var(--amber2);
+      box-shadow: 0 6px 16px rgba(227, 168, 59, .3);
+    }
+
+    /* VIEWS */
+    .view {
+      display: none;
+      min-height: calc(100vh - 76px)
+    }
+
+    .view.active {
+      display: block;
+      animation: viewIn .4s ease both
+    }
+
+    #dashboard.view.active {
+      display: block;
+      width: 100%;
+    }
+
+    /* HERO */
+    .hero,
+    .page-hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .hero {
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-bg,
+    .page-hero>img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+      animation: heroScale 14s ease-in-out infinite alternate;
+    }
+
+    .hero-overlay,
+    .page-hero:after {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      content: "";
+      background: rgba(11, 14, 12, .74);
+    }
+
+    .hero-grid,
+    .page-hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: .15;
+      background-size: 44px 44px;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .16) 1px, transparent 1px);
+    }
+
+    .hero-content {
+      width: var(--container);
+      margin: auto;
+      padding: 90px 0 75px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(310px, .8fr);
+      gap: 65px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin-top: 17px;
+      max-width: 1000px;
+      color: #fff;
+      font-size: clamp(55px, 7.3vw, 130px);
+      line-height: .9;
+      letter-spacing: -.067em;
+    }
+
+    .hero h1 .accent {
+      color: var(--amber)
+    }
+
+    .hero-copy>p {
+      max-width: 680px;
+      margin-top: 27px;
+      color: #e0e5df;
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      margin-top: 31px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-meta {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 21px;
+      color: #aeb7ae;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-meta i {
+      width: 7px;
+      height: 7px;
+      display: block;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    .hero-data {
+      padding: 25px;
+      background: rgba(18, 21, 19, .9);
+      border: 1px solid rgba(255, 255, 255, .2);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, .3);
+      animation: floatPanel 5s ease-in-out infinite;
+    }
+
+    .data-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding-bottom: 17px;
+      border-bottom: 1px solid #3c433d;
+    }
+
+    .data-top strong {
+      font-size: 14px;
+      color: #fff
+    }
+
+    .data-top span {
+      color: var(--emerald2);
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    .score-main {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      padding: 27px 0;
+    }
+
+    .score-main .number {
+      color: #fff;
+      font: 600 63px/1 "IBM Plex Mono", monospace;
+      letter-spacing: -.07em;
+    }
+
+    .score-main small {
+      display: block;
+      margin-top: 7px;
+      color: #abb4ab;
+      font-size: 11px;
+    }
+
+    .mini-chart {
+      height: 105px;
+      display: flex;
+      align-items: end;
+      gap: 7px;
+      border-bottom: 1px solid #3c433d;
+    }
+
+    .mini-bar {
+      flex: 1;
+      height: var(--h);
+      background: #69726a;
+      transform-origin: bottom;
+      animation: barRise 1.1s both;
+    }
+
+    .mini-bar.active {
+      background: var(--amber)
+    }
+
+    .data-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 15px;
+      padding-top: 16px;
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    .data-row span:first-child {
+      color: #aeb6ae
+    }
+
+    .data-row span:last-child {
+      color: #fff
+    }
+
+    /* METRICS */
+    .home-metrics {
+      background: var(--charcoal);
+      border-block: 1px solid #343b35;
+      color: #fff;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .metric {
+      min-height: 145px;
+      padding: 25px 30px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      border-right: 1px solid #343b35;
+    }
+
+    .metric:last-child {
+      border-right: 0
+    }
+
+    .metric-number {
+      color: #fff;
+      font: 600 37px/1 "IBM Plex Mono", monospace;
+      letter-spacing: -.05em;
+    }
+
+    .metric-label {
+      margin-top: 8px;
+      color: #adb6ad;
+      font-size: 12px;
+    }
+
+    /* SECTIONS */
+    .home-section,
+    .visual-section,
+    .page-section,
+    .workflow-section {
+      padding: 105px 0;
+    }
+
+    .visual-section {
+      background: var(--paper)
+    }
+
+    .workflow-section {
+      background: var(--warm)
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .visual-grid.reverse {
+      grid-template-columns: 1.1fr .9fr;
+    }
+
+    .visual-grid.reverse .visual-image {
+      order: 2
+    }
+
+    .visual-image {
+      position: relative;
+      min-height: 460px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #ddd8ce;
+    }
+
+    .visual-image img {
+      height: 100%;
+      min-height: 460px;
+      transition: transform .8s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .visual-image:hover img {
+      transform: scale(1.045)
+    }
+
+    .image-tag {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      padding: 8px 10px;
+      background: var(--charcoal);
+      color: #fff;
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    .image-score {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 145px;
+      padding: 15px;
+      background: #fff;
+      border-left: 3px solid var(--amber);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, .16);
+    }
+
+    .image-score strong {
+      display: block;
+      font: 600 27px/1 "IBM Plex Mono", monospace;
+    }
+
+    .image-score span {
+      display: block;
+      margin-top: 6px;
+      color: #646b64;
+      font-size: 10px;
+    }
+
+    .visual-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .visual-copy .eyebrow {
+      justify-content: center;
+    }
+
+    .visual-copy h2 {
+      max-width: 700px;
+      margin-top: 13px;
+      margin-inline: auto;
+      text-align: center;
+      color: var(--ink);
+      font-size: clamp(34px, 4vw, 61px);
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .visual-copy p {
+      max-width: 600px;
+      margin-top: 19px;
+      margin-inline: auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .data-list {
+      width: 100%;
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .data-list-row {
+      min-height: 57px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .data-list-row span:first-child {
+      color: #484f49;
+      font-size: 13px;
+    }
+
+    .data-list-row span:last-child {
+      font: 600 11px "IBM Plex Mono", monospace;
+      color: var(--charcoal);
+    }
+
+    /* WORKFLOW */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 60px;
+    }
+
+    .section-heading {
+      margin-bottom: 42px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-heading .eyebrow {
+      justify-content: center;
+    }
+
+    .section-heading h2 {
+      margin-top: 12px;
+      max-width: 760px;
+      margin-inline: auto;
+      text-align: center;
+      color: var(--ink);
+      font-size: clamp(31px, 4vw, 58px);
+      line-height: 1.03;
+      letter-spacing: -.045em;
+    }
+
+    .section-heading p {
+      margin-top: 15px;
+      max-width: 650px;
+      margin-inline: auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .dark-section .section-heading h2,
+    .dark-section .section-heading p {
+      color: #fff
+    }
+
+    .dark-section .section-heading p {
+      color: #b9c2ba
+    }
+
+    .timeline {
+      border-top: 1px solid #cbc5b9
+    }
+
+    .timeline-item {
+      min-height: 86px;
+      display: grid;
+      grid-template-columns: 125px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      border-bottom: 1px solid #cbc5b9;
+    }
+
+    .timeline-stage {
+      color: #70776f;
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 600
+    }
+
+    .timeline-status {
+      color: var(--emerald);
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    .signal-box {
+      min-height: 350px;
+      padding: 29px;
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .signal-box h3 {
+      max-width: 420px;
+      margin-top: 13px;
+      font-size: 30px;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+    }
+
+    .signal-bars {
+      height: 135px;
+      margin-top: 35px;
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      border-bottom: 1px solid #414841;
+    }
+
+    .signal-bar {
+      flex: 1;
+      height: var(--h);
+      background: #5c665e;
+      transform-origin: bottom;
+      animation: barRise 1.1s both;
+    }
+
+    .signal-bar:nth-child(5),
+    .signal-bar:nth-child(8) {
+      background: var(--amber)
+    }
+
+    .signal-caption {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      color: #949e95;
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      min-height: 410px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .page-hero-content {
+      width: var(--container);
+      max-width: 900px;
+      margin: auto;
+      padding: 75px 0 63px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-hero-content .eyebrow {
+      justify-content: center;
+    }
+
+    .page-hero h1 {
+      max-width: 950px;
+      margin-top: 14px;
+      margin-inline: auto;
+      text-align: center;
+      color: #fff;
+      font-size: clamp(48px, 6.4vw, 98px);
+      line-height: .93;
+      letter-spacing: -.06em;
+    }
+
+    .page-hero p {
+      max-width: 650px;
+      margin-top: 19px;
+      margin-inline: auto;
+      text-align: center;
+      color: #d3dad3;
+      font-size: 15px;
+    }
+
+    /* SPLIT */
+    .split-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .dark-section .split-panel {
+      border-color: #343b35;
+      background: transparent
+    }
+
+    .split-image {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+      max-height: 420px;
+    }
+
+    .split-image img {
+      width: 100%;
+      height: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      transition: transform .8s ease;
+    }
+
+    .split-image:hover img {
+      transform: scale(1.045)
+    }
+
+    .split-copy {
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .split-copy .eyebrow {
+      justify-content: center;
+    }
+
+    .split-copy h2 {
+      max-width: 650px;
+      margin-top: 10px;
+      margin-inline: auto;
+      text-align: center;
+      color: var(--ink);
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -.04em;
+    }
+
+    .split-copy p {
+      max-width: 570px;
+      margin-top: 12px;
+      margin-inline: auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    .dark-section .split-copy h2 {
+      color: #ffffff;
+    }
+
+    .dark-section .split-copy p {
+      color: #d0d7d0;
+    }
+
+    .compact-stats {
+      width: 100%;
+      margin-top: 24px;
+      padding-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .dark-section .compact-stats {
+      border-color: #3b423c;
+    }
+
+    .compact-stat {
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .compact-stat strong {
+      display: block;
+      font: 600 28px/1 "IBM Plex Mono", monospace;
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .compact-stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .dark-section .compact-stat strong {
+      color: #ffffff !important;
+    }
+
+    .dark-section .compact-stat span {
+      color: #d0d7d0 !important;
+    }
+
+    /* ASSESSMENTS */
+    .assessment-board {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 30px;
+    }
+
+    .board-panel {
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .panel-head {
+      min-height: 62px;
+      padding: 0 21px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-head strong {
+      font-size: 14px
+    }
+
+    .panel-head span {
+      font: 9px "IBM Plex Mono", monospace;
+      color: #777e76
+    }
+
+    .assessment-row {
+      min-height: 72px;
+      padding: 0 21px;
+      display: grid;
+      grid-template-columns: 1fr 80px 85px;
+      gap: 15px;
+      align-items: center;
+      border-bottom: 1px solid #ebe7df;
+      transition: .2s ease;
+    }
+
+    .assessment-row:hover {
+      background: #faf8f2
+    }
+
+    .assessment-name {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .assessment-meta {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px
+    }
+
+    .assessment-score {
+      font: 11px "IBM Plex Mono", monospace;
+      text-align: right;
+    }
+
+    .status {
+      min-height: 26px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font: 9px "IBM Plex Mono", monospace;
+      font-weight: 600;
+    }
+
+    .status.green {
+      background: #e1f3e8;
+      color: #277a4f
+    }
+
+    .status.amber {
+      background: #fff0d1;
+      color: #8a641b
+    }
+
+    .status.gray {
+      background: #ebeae5;
+      color: #626961
+    }
+
+    .progress-card {
+      padding: 25px;
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .progress-card h3 {
+      max-width: 400px;
+      margin-top: 10px;
+      font-size: 26px;
+      line-height: 1.08;
+    }
+
+    .progress-line {
+      margin-top: 28px
+    }
+
+    .progress-line-top {
+      display: flex;
+      justify-content: space-between;
+      color: #b9c2ba;
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    .progress-track {
+      height: 6px;
+      margin-top: 8px;
+      background: #363d37;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: var(--value);
+      height: 100%;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.3s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .in-view .progress-fill {
+      transform: scaleX(1)
+    }
+
+    /* QUESTION BANK */
+    .question-layout {
+      display: grid;
+      grid-template-columns: 245px 1fr;
+      gap: 28px;
+    }
+
+    .filter-panel {
+      align-self: start;
+      padding: 21px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .filter-panel h3 {
+      font-size: 14px
+    }
+
+    .filter-group {
+      margin-top: 22px
+    }
+
+    .filter-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #737a73;
+      font: 9px "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .filter-option {
+      min-height: 33px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ece9e2;
+      color: #4d554e;
+      font-size: 12px;
+    }
+
+    .filter-option span:last-child {
+      color: #858d85;
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    .question-list {
+      border-top: 1px solid var(--line)
+    }
+
+    .question-item {
+      display: grid;
+      grid-template-columns: 55px 1fr auto;
+      gap: 18px;
+      padding: 23px 0;
+      border-bottom: 1px solid var(--line);
+      transition: .25s ease;
+    }
+
+    .question-item:hover {
+      transform: translateX(5px)
+    }
+
+    .question-number {
+      color: #8b928a;
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    .question-item h3 {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .question-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .question-tag {
+      padding: 4px 6px;
+      background: #eeece6;
+      color: #666d66;
+      font: 8px "IBM Plex Mono", monospace;
+    }
+
+    .difficulty {
+      color: var(--emerald);
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    /* EVALUATION */
+    .rubric-layout {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 28px;
+    }
+
+    .submission-preview {
+      min-height: 510px;
+      padding: 27px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .student-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .student-name {
+      font-size: 17px;
+      font-weight: 700
+    }
+
+    .student-id {
+      margin-top: 3px;
+      color: var(--muted);
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    .paper-content {
+      margin-top: 22px;
+      color: #353b36;
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+
+    .paper-content p {
+      margin-bottom: 14px;
+    }
+
+    .paper-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .evidence-note {
+      margin-top: 32px;
+      padding: 16px;
+      border-left: 3px solid var(--emerald);
+      background: #edf7f1;
+      color: #405d4c;
+      font-size: 12px;
+    }
+
+    .rubric-table {
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .rubric-row {
+      min-height: 70px;
+      padding: 0 19px;
+      display: grid;
+      grid-template-columns: 1.3fr .7fr 100px;
+      align-items: center;
+      gap: 18px;
+      border-bottom: 1px solid #ebe7df;
+    }
+
+    .rubric-row.head {
+      min-height: 50px;
+      background: #f4f1eb;
+      color: #6c736c;
+      font: 9px "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .rubric-name {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .rubric-detail {
+      color: var(--muted);
+      font-size: 10px
+    }
+
+    .rubric-score {
+      color: var(--charcoal);
+      text-align: right;
+      font: 600 11px "IBM Plex Mono", monospace;
+    }
+
+    .total-score {
+      min-height: 100px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .total-score>span {
+      color: #aeb6ae;
+      font-size: 10px;
+    }
+
+    .total-score strong {
+      font: 600 43px/1 "IBM Plex Mono", monospace;
+    }
+
+    /* REPORTS */
+    .report-dashboard {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .report-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .report-card.large {
+      grid-column: span 8
+    }
+
+    .report-card.small {
+      grid-column: span 4
+    }
+
+    .report-card.full {
+      grid-column: 1/-1
+    }
+
+    .report-card-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .report-card-title h3 {
+      font-size: 14px
+    }
+
+    .report-card-title span {
+      color: #777e76;
+      font: 9px "IBM Plex Mono", monospace;
+    }
+
+    .line-chart {
+      position: relative;
+      height: 250px;
+      margin-top: 28px;
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background-size: 100% 50px;
+      background-image: linear-gradient(#ece9e2 1px, transparent 1px);
+    }
+
+    .line-chart svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: var(--amber);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      transition: stroke-dashoffset 1.8s ease;
+    }
+
+    .in-view .chart-line {
+      stroke-dashoffset: 0
+    }
+
+    .chart-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 9px;
+      color: #888f87;
+      font: 8px "IBM Plex Mono", monospace;
+    }
+
+    .big-report-number {
+      margin-top: 20px;
+      font: 600 56px/1 "IBM Plex Mono", monospace;
+      letter-spacing: -.07em;
+    }
+
+    .report-delta {
+      margin-top: 10px;
+      color: var(--emerald);
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    .report-breakdown-list {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #efebe4;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .report-breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .report-breakdown-item span {
+      color: #6a716b;
+    }
+
+    .report-breakdown-item strong {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #151816;
+    }
+
+    .report-breakdown-item strong.green {
+      color: var(--emerald);
+    }
+
+    .report-breakdown-item strong.amber {
+      color: var(--amber);
+    }
+
+    .comparison {
+      margin-top: 30px
+    }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 45px;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .comparison-row label {
+      font-size: 11px
+    }
+
+    .comparison-track {
+      height: 8px;
+      background: #e4e1d9;
+    }
+
+    .comparison-fill {
+      width: var(--value);
+      height: 100%;
+      background: var(--emerald);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.2s ease;
+    }
+
+    .in-view .comparison-fill {
+      transform: scaleX(1)
+    }
+
+    .comparison-row strong {
+      text-align: right;
+      font: 10px "IBM Plex Mono", monospace;
+    }
+
+    /* CONTACT */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 48px;
+      align-items: stretch;
+    }
+
+    .contact-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-copy h2 {
+      max-width: 560px;
+      margin-top: 13px;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -.05em;
+    }
+
+    .contact-copy>p {
+      max-width: 500px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-details {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .contact-detail-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #ffffff;
+      box-shadow: 0 3px 10px rgba(15, 19, 16, 0.03);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+      text-align: left;
+    }
+
+    .contact-detail-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--amber);
+      box-shadow: 0 8px 22px rgba(15, 19, 16, 0.07);
+    }
+
+    .contact-icon-box {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: rgba(227, 168, 59, 0.12);
+      color: #a3721d;
+    }
+
+    .contact-icon-box svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .contact-detail-text span {
+      display: block;
+      color: #697069;
+      font: 600 10px/1.2 "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      text-align: left;
+    }
+
+    .contact-detail-text strong {
+      display: block;
+      margin-top: 3px;
+      color: var(--charcoal);
+      font-size: 13.5px;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .contact-form {
+      padding: 31px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .form-social-connect {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .form-social-connect .social-bar-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .form-social-connect .follow-us-tag {
+      color: #d9383a;
+      font: 800 12px/1.2 "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .form-social-connect .social-bar-label span {
+      color: #697069;
+      font: 600 10px/1.2 "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .form-social-connect .social-icon-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    .form-social-connect .social-btn {
+      min-height: 42px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--charcoal);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(15, 19, 16, 0.04);
+      transition: all .25s ease;
+      white-space: nowrap;
+    }
+
+    .form-social-connect .social-btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .form-social-connect .social-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(15, 19, 16, 0.09);
+    }
+
+    .form-social-connect .social-btn.social-google:hover {
+      border-color: #4285F4;
+      background: #f6f9ff;
+    }
+
+    .form-social-connect .social-btn.social-microsoft:hover {
+      border-color: #00a4ef;
+      background: #f4faff;
+    }
+
+    .form-social-connect .social-btn.social-linkedin:hover {
+      border-color: #0A66C2;
+      background: #f4f8fc;
+    }
+
+    .form-social-connect .social-btn.social-github:hover {
+      border-color: #181717;
+      background: #f6f6f6;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field.full {
+      grid-column: 1/-1
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #404740;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      min-height: 45px;
+      padding: 11px 12px;
+      border: 1px solid #d4d0c7;
+      border-radius: 6px;
+      background: #fbfaf7;
+      color: var(--ink);
+    }
+
+    .field textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(227, 168, 59, .12);
+    }
+
+    .form-submit {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .form-submit .btn {
+      min-width: 240px;
+      justify-content: center;
+    }
+
+    .form-message {
+      color: var(--emerald);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      padding: 64px 0 28px;
+      background: var(--paper);
+      color: var(--ink);
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.3fr 0.8fr 0.8fr 0.8fr 1.3fr;
+      gap: 40px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .footer-brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-brand-col p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-col h4 {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-col li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col a {
+      color: #4d554e;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--amber);
+      transform: translateX(4px);
+    }
+
+    .footer-newsletter-col h4 {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .footer-newsletter-col p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .newsletter-input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 13px;
+      transition: border-color .2s ease;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(227, 168, 59, .12);
+    }
+
+    .newsletter-btn {
+      min-height: 42px;
+      padding: 0 16px;
+      white-space: nowrap;
+    }
+
+    .newsletter-message {
+      font-size: 11px;
+      color: var(--emerald);
+      min-height: 18px;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .social-button {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      transition: all .25s ease;
+    }
+
+    .social-button:hover {
+      border-color: var(--charcoal);
+      color: #ffffff;
+      background: var(--charcoal);
+      transform: translateY(-3px);
+    }
+
+    .social-button svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .footer-bottom {
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copyright {
+      color: var(--muted);
+      font: 11px/1.5 "IBM Plex Sans", sans-serif;
+    }
+
+    .back-top {
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      font: 11px "IBM Plex Mono", monospace;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .back-top:hover {
+      border-color: var(--charcoal);
+      color: #ffffff;
+      background: var(--charcoal);
+      transform: translateY(-2px);
+    }
+
+    /* DASHBOARD (SIMPLE TOP HEADER - NO SIDEBAR) */
+    #dashboard {
+      min-height: 100vh;
+      background: #f4f2ec;
+    }
+
+    .dashboard-top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 400;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .03);
+    }
+
+    .dashboard-top-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .dashboard-top-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--emerald);
+      font: 600 11px/1 "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+    }
+
+    .dashboard-top-status .live {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dashboard-top-status i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    .dashboard-logout-btn {
+      min-height: 42px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .23s ease;
+      cursor: pointer;
+    }
+
+    .dashboard-logout-btn:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+      background: #fff7f7;
+      transform: translateY(-2px);
+    }
+
+    .dashboard-logout-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .dashboard-body {
+      width: 100%;
+      padding: 36px 0 60px;
+    }
+
+    .dashboard-top-meta .live {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--emerald);
+    }
+
+    .dashboard-top-meta i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    .dashboard-content {
+      padding: 34px;
+    }
+
+    .dashboard-welcome {
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .dashboard-welcome .eyebrow {
+      justify-content: center;
+    }
+
+    .dashboard-welcome h1 {
+      margin-top: 8px;
+      color: #151816;
+      font-size: clamp(30px, 3.6vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+      text-align: center;
+    }
+
+    .dashboard-welcome p {
+      margin-top: 6px;
+      color: #5f6660;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .dashboard-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-inline: auto;
+    }
+
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .dash-stat {
+      position: relative;
+      min-height: 132px;
+      padding: 22px 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(15, 19, 16, .03);
+      transition: transform .25s ease, box-shadow .25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .dash-stat:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(15, 19, 16, .08);
+    }
+
+    .dash-stat:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 3px;
+      background: var(--accent, var(--amber));
+      border-radius: 3px 3px 0 0;
+    }
+
+    .dash-stat-label {
+      color: #697069;
+      font: 600 11px/1.2 "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      text-align: center;
+    }
+
+    .dash-stat-number {
+      display: block;
+      margin-top: 10px;
+      color: #151816;
+      font: 700 36px/1 "IBM Plex Mono", monospace;
+      text-align: center;
+    }
+
+    .dash-stat-change {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 8px;
+      color: var(--emerald);
+      font: 500 11px/1.2 "IBM Plex Mono", monospace;
+      text-align: center;
+    }
+
+    .dashboard-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+    }
+
+    .dash-panel {
+      min-width: 0;
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(15, 19, 16, .03);
+    }
+
+    .dash-panel-head {
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #efebe4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-panel-head h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #151816;
+    }
+
+    .dash-panel-head span {
+      color: #727972;
+      font: 600 11px/1 "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+    }
+
+    .dashboard-chart {
+      height: 245px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      padding-top: 16px;
+      border-bottom: 1px solid #efebe4;
+    }
+
+    .dashboard-chart-bar {
+      flex: 1;
+      height: var(--h);
+      min-width: 8px;
+      background: #909890;
+      border-radius: 3px 3px 0 0;
+      transform-origin: bottom;
+      animation: barRise 1.1s both;
+      transition: background .2s ease;
+    }
+
+    .dashboard-chart-bar:hover {
+      background: var(--charcoal);
+    }
+
+    .dashboard-chart-bar:nth-child(4),
+    .dashboard-chart-bar:nth-child(7),
+    .dashboard-chart-bar:nth-child(10) {
+      background: var(--amber);
+    }
+
+    .dashboard-list {
+      border-top: none;
+    }
+
+    .dash-list-row {
+      min-height: 48px;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #f0ece3;
+    }
+
+    .dash-list-row:last-child {
+      border-bottom: none;
+    }
+
+    .dash-list-row strong {
+      font-size: 13px;
+      font-weight: 500;
+      color: #222723;
+    }
+
+    .dash-list-row span {
+      font: 600 11px/1 "IBM Plex Mono", monospace;
+    }
+
+    .dashboard-bottom-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* AUTH */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(12, 15, 13, .86);
+    }
+
+    .auth-overlay.active {
+      display: flex;
+      animation: fadeIn .25s ease both;
+    }
+
+    .auth-modal {
+      position: relative;
+      width: min(100%, 1000px);
+      min-height: 590px;
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      background: #fff;
+      box-shadow: 0 35px 100px rgba(0, 0, 0, .4);
+      animation: authIn .4s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .auth-image {
+      position: relative;
+      min-height: 590px;
+      overflow: hidden;
+      background: var(--charcoal);
+    }
+
+    .auth-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .auth-image:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 18, 16, .53);
+    }
+
+    .auth-image-copy {
+      position: absolute;
+      z-index: 2;
+      left: 34px;
+      right: 30px;
+      bottom: 34px;
+      color: #fff;
+    }
+
+    .auth-image-copy h2 {
+      max-width: 430px;
+      margin-top: 11px;
+      font-size: 35px;
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .auth-image-copy p {
+      margin-top: 12px;
+      color: #d0d7d0;
+      font-size: 12px;
+    }
+
+    .auth-form-side {
+      position: relative;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #fff;
+    }
+
+    .auth-logo {
+      position: absolute;
+      top: 21px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+    }
+
+    .auth-logo:hover .brand-text {
+      color: #805f19
+    }
+
+    .auth-logo .brand-text {
+      font-size: 17px
+    }
+
+    .auth-close {
+      position: absolute;
+      top: 19px;
+      right: 19px;
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #555d55;
+    }
+
+    .auth-heading {
+      margin-top: 31px
+    }
+
+    .auth-heading h2 {
+      margin-top: 9px;
+      color: #151816;
+      font-size: 33px;
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .auth-heading p {
+      margin-top: 9px;
+      color: #737a73;
+      font-size: 12px;
+    }
+
+    .auth-form {
+      margin-top: 23px
+    }
+
+    .auth-form .field {
+      margin-bottom: 14px
+    }
+
+    .auth-row {
+      margin: 5px 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #6b736b;
+      font-size: 10px;
+    }
+
+    .remember input {
+      accent-color: var(--amber)
+    }
+
+    .forgot {
+      border: 0;
+      background: none;
+      color: #85631c;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .auth-submit {
+      width: 100%
+    }
+
+    .social-login {
+      width: 100%;
+      min-height: 45px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid #d6d2c9;
+      border-radius: 6px;
+      background: #fff;
+      color: #343a35;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .social-login:hover {
+      background: #faf8f3;
+      border-color: #a9afa8
+    }
+
+    .google-logo {
+      width: 18px;
+      height: 18px
+    }
+
+    .auth-switch {
+      margin-top: 19px;
+      text-align: center;
+      color: #747b74;
+      font-size: 11px;
+    }
+
+    .auth-switch button {
+      border: 0;
+      background: none;
+      color: #805f19;
+      font-weight: 700;
+    }
+
+    /* ANIMATION */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    [data-reveal="left"] {
+      transform: translateX(-30px)
+    }
+
+    [data-reveal="right"] {
+      transform: translateX(30px)
+    }
+
+    [data-reveal].in-view {
+      opacity: 1;
+      transform: none;
+    }
+
+    .stagger>* {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .stagger.in-view>* {
+      animation: staggerIn .55s ease forwards;
+    }
+
+    .stagger.in-view>*:nth-child(1) {
+      animation-delay: .04s
+    }
+
+    .stagger.in-view>*:nth-child(2) {
+      animation-delay: .09s
+    }
+
+    .stagger.in-view>*:nth-child(3) {
+      animation-delay: .14s
+    }
+
+    .stagger.in-view>*:nth-child(4) {
+      animation-delay: .19s
+    }
+
+    .stagger.in-view>*:nth-child(5) {
+      animation-delay: .24s
+    }
+
+    .stagger.in-view>*:nth-child(6) {
+      animation-delay: .29s
+    }
+
+    .scan-line {
+      position: relative
+    }
+
+    .scan-line:before {
+      content: "";
+      position: absolute;
+      z-index: 4;
+      left: 0;
+      right: 0;
+      top: -2px;
+      height: 2px;
+      background: var(--amber);
+      box-shadow: 0 0 14px rgba(227, 168, 59, .55);
+      opacity: 0;
+    }
+
+    .scan-line.in-view:before {
+      opacity: 1;
+      animation: scan 2.4s ease-in-out infinite;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 5000;
+      right: 24px;
+      bottom: 24px;
+      max-width: 350px;
+      padding: 14px 17px;
+      background: var(--charcoal);
+      color: #fff;
+      border-left: 3px solid var(--emerald);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, .2);
+      font-size: 12px;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: .3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes viewIn {
+      from {
+        opacity: 0;
+        transform: translateY(7px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes authIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px) scale(.985)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes menuIn {
+      from {
+        opacity: 0;
+        transform: translateY(-7px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes heroScale {
+      from {
+        transform: scale(1)
+      }
+
+      to {
+        transform: scale(1.045)
+      }
+    }
+
+    @keyframes floatPanel {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-8px)
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 0 5px rgba(54, 166, 111, .12)
+      }
+
+      50% {
+        opacity: .55;
+        box-shadow: 0 0 0 9px rgba(54, 166, 111, .02)
+      }
+    }
+
+    @keyframes barRise {
+      from {
+        transform: scaleY(0)
+      }
+
+      to {
+        transform: scaleY(1)
+      }
+    }
+
+    @keyframes staggerIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes scan {
+      0% {
+        top: -2px
+      }
+
+      50% {
+        top: 100%
+      }
+
+      100% {
+        top: -2px
+      }
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1250px) {
+      :root {
+        --container: calc(100% - 44px)
+      }
+
+      .nav-link {
+        padding: 0 7px;
+        font-size: 12px;
+      }
+
+      .nav-link:after {
+        left: 7px;
+        right: 7px;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr .68fr;
+        gap: 40px;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media(max-width:1024px) {
+      :root {
+        --container: calc(100% - 40px)
+      }
+
+      .nav-actions .btn-outline {
+        display: none
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero {
+        min-height: 650px
+      }
+
+      .hero-data {
+        max-width: 560px
+      }
+
+      .visual-grid,
+      .visual-grid.reverse {
+        grid-template-columns: 1fr;
+        gap: 38px;
+      }
+
+      .visual-grid.reverse .visual-image {
+        order: 0
+      }
+
+      .visual-image,
+      .visual-image img {
+        min-height: 400px;
+      }
+
+      .workflow-grid,
+      .assessment-board,
+      .rubric-layout,
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .question-layout {
+        grid-template-columns: 210px 1fr;
+      }
+
+      .report-card.large {
+        grid-column: span 7
+      }
+
+      .report-card.small {
+        grid-column: span 5
+      }
+
+      .dashboard-shell {
+        grid-template-columns: 205px 1fr;
+      }
+
+      .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:800px) {
+      :root {
+        --container: calc(100% - 32px)
+      }
+
+      .public-nav,
+      .nav-inner {
+        min-height: 68px
+      }
+
+      .nav-links,
+      .nav-actions .btn-primary {
+        display: none
+      }
+
+      .mobile-menu-button {
+        display: grid;
+        place-items: center;
+      }
+
+      .hero {
+        min-height: 640px
+      }
+
+      .hero h1 {
+        font-size: clamp(49px, 11vw, 80px)
+      }
+
+      .hero-copy>p {
+        font-size: 16px
+      }
+
+      .metric-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .metric {
+        min-height: 120px;
+        border-bottom: 1px solid #343b35;
+      }
+
+      .metric:nth-child(2) {
+        border-right: 0
+      }
+
+      .metric-number {
+        font-size: 31px
+      }
+
+      .page-hero {
+        min-height: 360px
+      }
+
+      .page-hero h1 {
+        font-size: clamp(45px, 10vw, 75px)
+      }
+
+      .split-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .split-image,
+      .split-image img {
+        min-height: 320px;
+      }
+
+      .split-copy {
+        padding: 40px 24px;
+        text-align: center;
+        align-items: center;
+      }
+
+      .question-layout {
+        grid-template-columns: 1fr
+      }
+
+      .filter-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .filter-group {
+        margin-top: 0
+      }
+
+      .report-card.large,
+      .report-card.small,
+      .report-card.full {
+        grid-column: 1/-1
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr
+      }
+
+
+
+      /* Mobile dashboard keeps logo + logout, but no public nav/footer. */
+    }
+
+    @media(max-width:600px) {
+      :root {
+        --container: calc(100% - 24px)
+      }
+
+      .home-section,
+      .visual-section,
+      .workflow-section,
+      .page-section {
+        padding: 70px 0;
+      }
+
+      .hero-content {
+        padding: 60px 0 55px
+      }
+
+      .hero h1 {
+        font-size: clamp(46px, 13vw, 67px)
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .btn {
+        width: 100%
+      }
+
+      .hero-meta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .visual-image,
+      .visual-image img {
+        min-height: 300px
+      }
+
+      .timeline-item {
+        grid-template-columns: 75px 1fr;
+        gap: 12px;
+        padding: 14px 0;
+      }
+
+      .timeline-status {
+        grid-column: 2
+      }
+
+      .assessment-row {
+        grid-template-columns: 1fr auto;
+        gap: 7px;
+        padding: 14px 16px;
+      }
+
+      .assessment-score {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .assessment-row .status {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      .question-item {
+        grid-template-columns: 35px 1fr;
+        gap: 13px;
+      }
+
+      .difficulty {
+        grid-column: 2
+      }
+
+      .rubric-row {
+        grid-template-columns: 1fr 70px;
+        min-height: 80px;
+        padding: 12px 15px;
+      }
+
+      .rubric-row.head {
+        display: none
+      }
+
+      .rubric-detail {
+        grid-column: 1
+      }
+
+      .rubric-score {
+        grid-column: 2;
+        grid-row: 1/3;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr
+      }
+
+      .field.full {
+        grid-column: auto
+      }
+
+      .form-submit {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .dashboard-welcome {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .dashboard-actions {
+        width: 100%
+      }
+
+      .dashboard-actions .btn {
+        flex: 1
+      }
+
+      .dashboard-stats {
+        grid-template-columns: 1fr
+      }
+
+      .dashboard-bottom-grid {
+        grid-template-columns: 1fr
+      }
+
+      .dashboard-top-meta {
+        display: none
+      }
+
+      /*
+    FIX:
+    The signup/login overlay itself becomes the scrolling surface.
+    There is NO fixed-height internal form and NO nested scrollbar.
+  */
+      body.modal-open {
+        overflow: auto;
+      }
+
+      .auth-overlay {
+        position: fixed;
+        inset: 0;
+        padding: 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        background: #fff;
+      }
+
+      .auth-modal {
+        width: 100%;
+        min-height: 100%;
+        height: auto;
+        display: block;
+        box-shadow: none;
+      }
+
+      .auth-image {
+        display: none
+      }
+
+      .auth-form-side {
+        min-height: 100dvh;
+        height: auto;
+        padding: 88px 22px 38px;
+        display: block;
+      }
+
+      .auth-form {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        padding-bottom: 12px;
+      }
+
+      .auth-heading {
+        margin-top: 30px
+      }
+
+      .auth-logo {
+        top: 22px
+      }
+    }
+
+    @media(max-width:420px) {
+      :root {
+        --container: calc(100% - 24px)
+      }
+
+      .hero h1 {
+        font-size: 45px
+      }
+
+      .metric {
+        padding: 19px 16px
+      }
+
+      .metric-number {
+        font-size: 27px
+      }
+
+      .filter-panel {
+        grid-template-columns: 1fr
+      }
+
+      .compact-stats {
+        grid-template-columns: 1fr
+      }
+
+      .compact-stat {
+        padding: 13px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .dashboard-content {
+        padding: 20px 12px
+      }
+
+      .dashboard-top {
+        padding: 0 12px
+      }
+
+      .auth-form-side {
+        padding-inline: 18px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==========================================================
+     PUBLIC NAVIGATION
+     Dashboard is deliberately removed when Dashboard is active.
+=========================================================== -->
+  <header class="public-nav" id="publicNav">
+    <div class="nav-inner">
+
+      <!-- FIXED: website logo is a real route link -->
+      <a class="brand" href="#home" data-route="home" aria-label="AssessIQ Home">
+        <img src="logo.png" alt="AssessIQ Logo" class="brand-logo-img"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+        <span class="brand-mark" style="display:none">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M6 25 13 7h6l7 18h-5l-1.6-4.5h-7.8L10 25H6Zm7-8h5l-2.5-6.7L13 17Z" fill="currentColor" />
+          </svg>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="nav-link active" href="#home" data-route="home">Home</a>
+        <a class="nav-link" href="#assessments" data-route="assessments">Assessments</a>
+        <a class="nav-link" href="#questions" data-route="questions">Question Bank</a>
+        <a class="nav-link" href="#evaluation" data-route="evaluation">Evaluation</a>
+        <a class="nav-link" href="#reports" data-route="reports">Reports</a>
+        <a class="nav-link" href="#contact" data-route="contact">Contact</a>
+        <a class="nav-link" href="#dashboard" data-route="dashboard">Dashboard</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div id="publicAuthActions" style="display:flex;gap:8px;align-items:center;">
+          <button class="btn btn-outline" type="button" data-auth="login">Log in</button>
+          <button class="btn btn-primary" type="button" data-auth="signup">Get started</button>
+        </div>
+        <button class="btn btn-outline" type="button" id="headerLogoutBtn"
+          style="display:none;border-color:var(--danger);color:var(--danger);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            style="width:16px;height:16px;margin-right:4px;" aria-hidden="true">
+            <path d="M10 5H5v14h5M14 8l4 4-4 4M18 12H9" />
+          </svg>
+          Log out
+        </button>
+
+        <button class="mobile-menu-button" id="mobileMenuButton" type="button" aria-label="Open navigation"
+          aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#home" data-route="home">Home</a>
+      <a href="#assessments" data-route="assessments">Assessments</a>
+      <a href="#questions" data-route="questions">Question Bank</a>
+      <a href="#evaluation" data-route="evaluation">Evaluation</a>
+      <a href="#reports" data-route="reports">Reports</a>
+      <a href="#contact" data-route="contact">Contact</a>
+      <a href="#dashboard" data-route="dashboard">Dashboard</a>
+      <div class="mobile-nav-actions">
+        <button class="btn btn-outline" type="button" data-auth="login">Log in</button>
+        <button class="btn btn-primary" type="button" data-auth="signup">Get started</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ==========================================================
+     HOME
+=========================================================== -->
+  <main id="home" class="view active">
+
+    <section class="hero scan-line" data-reveal>
+      <img class="hero-bg"
+        src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=3840"
+        alt="Assessment team collaborating around a table"
+        onerror="this.onerror=null;this.src='https://images.pexels.com/photos/5905710/pexels-photo-5905710.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+      <div class="hero-overlay"></div>
+      <div class="hero-grid"></div>
+
+      <div class="hero-content">
+
+        <div class="hero-copy">
+          <span class="eyebrow">Assessment intelligence</span>
+
+          <h1>
+            Measure what<br>
+            <span class="accent">matters.</span>
+          </h1>
+
+          <p>
+            AssessIQ brings assessment creation, question management,
+            evaluation, grading and performance reporting into one precise workflow.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-route-button="dashboard">Open dashboard →</button>
+            <button class="btn btn-light-outline" data-route-button="assessments">Explore assessments</button>
+          </div>
+
+          <div class="hero-meta">
+            <span><i></i> Live assessment data</span>
+            <span><i></i> Rubric-ready evaluation</span>
+            <span><i></i> Decision-grade reports</span>
+          </div>
+        </div>
+
+        <aside class="hero-data" data-reveal="right">
+          <div class="data-top">
+            <strong>Performance pulse</strong>
+            <span>LIVE / 09:42</span>
+          </div>
+
+          <div class="score-main">
+            <div>
+              <div class="number count" data-count="87">0</div>
+              <small>average score</small>
+            </div>
+            <span class="green mono">+6.4%</span>
+          </div>
+
+          <div class="mini-chart">
+            <span class="mini-bar" style="--h:38%"></span>
+            <span class="mini-bar" style="--h:48%"></span>
+            <span class="mini-bar" style="--h:44%"></span>
+            <span class="mini-bar active" style="--h:61%"></span>
+            <span class="mini-bar" style="--h:58%"></span>
+            <span class="mini-bar active" style="--h:76%"></span>
+            <span class="mini-bar" style="--h:69%"></span>
+            <span class="mini-bar active" style="--h:91%"></span>
+          </div>
+
+          <div class="data-row"><span>Completed evaluations</span><span>1,284</span></div>
+          <div class="data-row"><span>Rubric alignment</span><span>94.8%</span></div>
+        </aside>
+
+      </div>
+    </section>
+
+    <section class="home-metrics">
+      <div class="site-container metric-grid stagger" data-reveal>
+        <div class="metric"><span class="metric-number count" data-count="1284">0</span><span
+            class="metric-label">evaluations completed</span></div>
+        <div class="metric"><span class="metric-number count" data-count="94">0</span><span class="metric-label">percent
+            rubric alignment</span></div>
+        <div class="metric"><span class="metric-number count" data-count="37">0</span><span class="metric-label">active
+            assessments</span></div>
+        <div class="metric"><span class="metric-number count" data-count="18">0</span><span class="metric-label">report
+            views today</span></div>
+      </div>
+    </section>
+
+    <section class="visual-section">
+      <div class="site-container visual-grid">
+
+        <div class="visual-image scan-line" data-reveal="left">
+          <img src="https://images.pexels.com/photos/5905710/pexels-photo-5905710.jpeg?auto=compress&cs=tinysrgb&w=3840"
+            alt="Student completing an assessment" loading="lazy"
+            onerror="this.onerror=null;this.src='https://images.pexels.com/photos/5212700/pexels-photo-5212700.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          <span class="image-tag">ASSESSMENT / 04</span>
+          <div class="image-score"><strong>92%</strong><span>completion confidence</span></div>
+        </div>
+
+        <div class="visual-copy" data-reveal="right">
+          <span class="eyebrow">Assessment workflow</span>
+          <h2>One workflow. No scattered tools.</h2>
+          <p>Build structured assessments, set scoring rules and follow submissions through the stages that matter.</p>
+
+          <div class="data-list">
+            <div class="data-list-row"><span>Assessment creation</span><span>READY</span></div>
+            <div class="data-list-row"><span>Question allocation</span><span>37 ITEMS</span></div>
+            <div class="data-list-row"><span>Submission monitoring</span><span>ACTIVE</span></div>
+            <div class="data-list-row"><span>Evaluation queue</span><span>12 PENDING</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="visual-section" style="background:var(--warm)">
+      <div class="site-container visual-grid reverse">
+
+        <div class="visual-image scan-line" data-reveal="right">
+          <img src="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=3840"
+            alt="Educator reviewing student work" loading="lazy"
+            onerror="this.onerror=null;this.src='https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          <span class="image-tag">EVALUATION / 08</span>
+          <div class="image-score"><strong>4.7/5</strong><span>evaluation consistency</span></div>
+        </div>
+
+        <div class="visual-copy" data-reveal="left">
+          <span class="eyebrow">Data appearing as motion</span>
+          <h2>See performance change while you work.</h2>
+          <p>Scores, completion rates and comparisons update visually so the movement behind every result is easy to
+            understand.</p>
+
+          <div class="data-list">
+            <div class="data-list-row"><span>Average score</span><span class="green">+6.4%</span></div>
+            <div class="data-list-row"><span>Completion rate</span><span class="green">+11.2%</span></div>
+            <div class="data-list-row"><span>Evaluation turnaround</span><span>−18%</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="workflow-section">
+      <div class="site-container workflow-grid">
+
+        <div data-reveal="left">
+          <div class="section-heading">
+            <span class="eyebrow">Assessment lifecycle</span>
+            <h2>Every stage has a signal.</h2>
+            <p>Follow an assessment from its first question to its final report.</p>
+          </div>
+
+          <div class="timeline stagger" data-reveal>
+            <div class="timeline-item"><span class="timeline-stage">01 / Created</span><strong
+                class="timeline-title">Assessment configured</strong><span class="timeline-status">DONE</span></div>
+            <div class="timeline-item"><span class="timeline-stage">02 / Submitted</span><strong
+                class="timeline-title">Responses collected</strong><span class="timeline-status">DONE</span></div>
+            <div class="timeline-item"><span class="timeline-stage">03 / Evaluated</span><strong
+                class="timeline-title">Rubric applied</strong><span class="timeline-status">ACTIVE</span></div>
+            <div class="timeline-item"><span class="timeline-stage">04 / Graded</span><strong
+                class="timeline-title">Results finalized</strong><span class="timeline-status">NEXT</span></div>
+          </div>
+        </div>
+
+        <div class="signal-box scan-line" data-reveal="right">
+          <span class="eyebrow">Live signal</span>
+          <h3>Performance is not a static number.</h3>
+
+          <div class="signal-bars">
+            <span class="signal-bar" style="--h:31%"></span>
+            <span class="signal-bar" style="--h:45%"></span>
+            <span class="signal-bar" style="--h:38%"></span>
+            <span class="signal-bar" style="--h:58%"></span>
+            <span class="signal-bar" style="--h:73%"></span>
+            <span class="signal-bar" style="--h:62%"></span>
+            <span class="signal-bar" style="--h:83%"></span>
+            <span class="signal-bar" style="--h:91%"></span>
+          </div>
+
+          <div class="signal-caption"><span>WEEK 01</span><span>WEEK 08</span></div>
+        </div>
+
+      </div>
+    </section>
+
+
+  </main>
+
+
+  <!-- ==========================================================
+     ASSESSMENTS
+=========================================================== -->
+  <main id="assessments" class="view">
+
+    <section class="page-hero">
+      <img src="https://images.pexels.com/photos/5212700/pexels-photo-5212700.jpeg?auto=compress&cs=tinysrgb&w=3840"
+        alt="Student preparing assessment work"
+        onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-content">
+        <span class="eyebrow">01 / Assessments</span>
+        <h1>Build assessments with intent.</h1>
+        <p>Create structured tests and assignments without losing sight of scoring, timing or outcomes.</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-container">
+
+        <div class="section-heading" data-reveal>
+          <span class="eyebrow">Active assessment set</span>
+          <h2>Everything important, at a glance.</h2>
+        </div>
+
+        <div class="assessment-board">
+
+          <div class="board-panel stagger" data-reveal="left">
+            <div class="panel-head"><strong>Current assessments</strong><span>04 ACTIVE</span></div>
+
+            <div class="assessment-row">
+              <div>
+                <div class="assessment-name">Applied Statistics / Midterm</div>
+                <div class="assessment-meta">42 questions · 60 min</div>
+              </div>
+              <div class="assessment-score">84%</div><span class="status green">ACTIVE</span>
+            </div>
+
+            <div class="assessment-row">
+              <div>
+                <div class="assessment-name">Research Methods / Project</div>
+                <div class="assessment-meta">12 tasks · rubric</div>
+              </div>
+              <div class="assessment-score">76%</div><span class="status amber">REVIEW</span>
+            </div>
+
+            <div class="assessment-row">
+              <div>
+                <div class="assessment-name">Business Analytics / Quiz</div>
+                <div class="assessment-meta">25 questions · 30 min</div>
+              </div>
+              <div class="assessment-score">91%</div><span class="status green">READY</span>
+            </div>
+
+            <div class="assessment-row">
+              <div>
+                <div class="assessment-name">Academic Writing / Portfolio</div>
+                <div class="assessment-meta">8 submissions · rubric</div>
+              </div>
+              <div class="assessment-score">—</div><span class="status gray">DRAFT</span>
+            </div>
+          </div>
+
+          <div class="progress-card scan-line" data-reveal="right">
+            <span class="eyebrow">Completion pulse</span>
+            <h3>Assessment cycle is 78% complete.</h3>
+
+            <div class="progress-line">
+              <div class="progress-line-top"><span>CREATED</span><span>100%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="--value:100%"></div>
+              </div>
+            </div>
+
+            <div class="progress-line">
+              <div class="progress-line-top"><span>SUBMITTED</span><span>88%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="--value:88%"></div>
+              </div>
+            </div>
+
+            <div class="progress-line">
+              <div class="progress-line-top"><span>EVALUATED</span><span>71%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="--value:71%"></div>
+              </div>
+            </div>
+
+            <div class="progress-line">
+              <div class="progress-line-top"><span>GRADED</span><span>63%</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="--value:63%"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" style="background:var(--warm)">
+      <div class="site-container">
+        <div class="split-panel" data-reveal>
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Learner completing digital assessment work" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+          <div class="split-copy">
+            <span class="eyebrow">Assessment builder</span>
+            <h2>Structure before you score.</h2>
+            <p>Set question groups, marks, time limits and evaluation rules before responses arrive.</p>
+
+            <div class="compact-stats">
+              <div class="compact-stat"><strong>42</strong><span>questions</span></div>
+              <div class="compact-stat"><strong>60</strong><span>minutes</span></div>
+              <div class="compact-stat"><strong>100</strong><span>total marks</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section dark-section" style="background:var(--charcoal)">
+      <div class="site-container">
+        <div class="split-panel" style="border-color:#343b35;background:transparent" data-reveal>
+
+          <div class="split-copy">
+            <span class="eyebrow">Assignment intelligence</span>
+            <h2>Know what is moving before it becomes a problem.</h2>
+            <p>Monitor participation and completion patterns while an assessment is live.</p>
+
+            <div class="compact-stats">
+              <div class="compact-stat"><strong>88%</strong><span>submitted</span></div>
+              <div class="compact-stat"><strong>12</strong><span>pending</span></div>
+              <div class="compact-stat"><strong class="green">+11%</strong><span>weekly completion</span></div>
+            </div>
+          </div>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/5212664/pexels-photo-5212664.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Learners collaborating on academic work" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer"></footer>
+  </main>
+
+
+  <!-- ==========================================================
+     QUESTION BANK
+=========================================================== -->
+  <main id="questions" class="view">
+
+    <section class="page-hero">
+      <img src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=3840"
+        alt="Books and learning materials"
+        onerror="this.onerror=null;this.src='https://images.pexels.com/photos/256381/pexels-photo-256381.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-content">
+        <span class="eyebrow">02 / Question Bank</span>
+        <h1>Better questions. Better evidence.</h1>
+        <p>Organize questions by topic, difficulty and outcome so every assessment measures something meaningful.</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-container">
+
+        <div class="section-heading" data-reveal>
+          <span class="eyebrow">Question inventory</span>
+          <h2>Find the right evidence quickly.</h2>
+        </div>
+
+        <div class="question-layout">
+
+          <aside class="filter-panel" data-reveal="left">
+            <h3>Filter questions</h3>
+
+            <div class="filter-group">
+              <span class="filter-label">Subject</span>
+              <div class="filter-option"><span>Statistics</span><span>124</span></div>
+              <div class="filter-option"><span>Research</span><span>89</span></div>
+              <div class="filter-option"><span>Analytics</span><span>73</span></div>
+            </div>
+
+            <div class="filter-group">
+              <span class="filter-label">Difficulty</span>
+              <div class="filter-option"><span>Easy</span><span>81</span></div>
+              <div class="filter-option"><span>Medium</span><span>146</span></div>
+              <div class="filter-option"><span>Hard</span><span>59</span></div>
+            </div>
+
+            <div class="filter-group">
+              <span class="filter-label">Type</span>
+              <div class="filter-option"><span>MCQ</span><span>171</span></div>
+              <div class="filter-option"><span>Short answer</span><span>72</span></div>
+              <div class="filter-option"><span>Rubric</span><span>43</span></div>
+            </div>
+          </aside>
+
+          <div class="question-list stagger" data-reveal="right">
+
+            <article class="question-item">
+              <span class="question-number">Q-0148</span>
+              <div>
+                <h3>Which statistical method best explains the relationship between two continuous variables?</h3>
+                <div class="question-tags"><span class="question-tag">STATISTICS</span><span
+                    class="question-tag">ANALYSIS</span></div>
+              </div>
+              <span class="difficulty">MEDIUM</span>
+            </article>
+
+            <article class="question-item">
+              <span class="question-number">Q-0149</span>
+              <div>
+                <h3>Evaluate the reliability of the proposed research methodology and justify your conclusion.</h3>
+                <div class="question-tags"><span class="question-tag">RESEARCH</span><span
+                    class="question-tag">RUBRIC</span></div>
+              </div>
+              <span class="difficulty">HARD</span>
+            </article>
+
+            <article class="question-item">
+              <span class="question-number">Q-0150</span>
+              <div>
+                <h3>Identify the most appropriate visualization for comparing category-level performance.</h3>
+                <div class="question-tags"><span class="question-tag">ANALYTICS</span><span
+                    class="question-tag">MCQ</span></div>
+              </div>
+              <span class="difficulty">EASY</span>
+            </article>
+
+            <article class="question-item">
+              <span class="question-number">Q-0151</span>
+              <div>
+                <h3>Interpret the change in mean score across the three assessment cohorts shown.</h3>
+                <div class="question-tags"><span class="question-tag">DATA</span><span class="question-tag">SHORT</span>
+                </div>
+              </div>
+              <span class="difficulty">MEDIUM</span>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" style="background:var(--warm)">
+      <div class="site-container">
+        <div class="split-panel" data-reveal>
+
+          <div class="split-image">
+            <img src="https://images.pexels.com/photos/256381/pexels-photo-256381.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Open books representing structured knowledge" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+          <div class="split-copy">
+            <span class="eyebrow">Question quality</span>
+            <h2>Build a bank around learning outcomes.</h2>
+            <p>Keep questions connected to concepts, difficulty and intended evidence.</p>
+
+            <div class="compact-stats">
+              <div class="compact-stat"><strong>286</strong><span>questions</span></div>
+              <div class="compact-stat"><strong>14</strong><span>topics</span></div>
+              <div class="compact-stat"><strong>92%</strong><span>tag coverage</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-container">
+        <div class="split-panel" data-reveal>
+
+          <div class="split-copy">
+            <span class="eyebrow">Coverage map</span>
+            <h2>See what your assessment actually tests.</h2>
+            <p>Compare question distribution against target learning outcomes before publishing.</p>
+
+            <div class="data-list">
+              <div class="data-list-row"><span>Recall</span><span>22%</span></div>
+              <div class="data-list-row"><span>Application</span><span>38%</span></div>
+              <div class="data-list-row"><span>Analysis</span><span>29%</span></div>
+              <div class="data-list-row"><span>Evaluation</span><span>11%</span></div>
+            </div>
+          </div>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/5212326/pexels-photo-5212326.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Person organizing notes and learning materials" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer"></footer>
+  </main>
+
+
+  <!-- ==========================================================
+     EVALUATION
+=========================================================== -->
+  <main id="evaluation" class="view">
+
+    <section class="page-hero">
+      <img src="https://images.pexels.com/photos/5940833/pexels-photo-5940833.jpeg?auto=compress&cs=tinysrgb&w=3840"
+        alt="Educator evaluating work at a desk"
+        onerror="this.onerror=null;this.src='https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-content">
+        <span class="eyebrow">03 / Evaluation</span>
+        <h1>Evaluate with consistency.</h1>
+        <p>Bring submissions, evidence and rubrics into one focused evaluation workspace.</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-container">
+
+        <div class="section-heading" data-reveal>
+          <span class="eyebrow">Rubric workspace</span>
+          <h2>Evidence on one side. Judgment on the other.</h2>
+        </div>
+
+        <div class="rubric-layout">
+
+          <div class="submission-preview scan-line" data-reveal="left">
+            <div class="student-strip">
+              <div>
+                <div class="student-name">Aarav Menon</div>
+                <div class="student-id">SUBMISSION / ST-1048</div>
+              </div>
+              <span class="status amber">IN REVIEW</span>
+            </div>
+
+            <div class="paper-content">
+              <p>This study evaluates the impact of automated scoring models on undergraduate research projects. Using a
+                sample size of N=142 across four academic terms, we analyzed score distributions and rubric consistency
+                before and after implementing structured evaluation criteria.</p>
+              <p>Our quantitative analysis indicates a statistically significant improvement in scoring reliability (p
+                &lt; .01), with rubric alignment increasing by 14.2% across peer-reviewed evaluations. Furthermore,
+                qualitative analysis of student feedback demonstrated higher overall clarity and timeliness during
+                evaluation cycles.</p>
+            </div>
+
+            <div class="evidence-note">
+              Evidence detected: clear methodology, appropriate source use,
+              and strong interpretation of findings.
+            </div>
+          </div>
+
+          <div class="rubric-table" data-reveal="right">
+
+            <div class="rubric-row head">
+              <span>Criterion</span><span>Evidence</span><span>Score</span>
+            </div>
+
+            <div class="rubric-row">
+              <div>
+                <div class="rubric-name">Methodology</div>
+                <div class="rubric-detail">Approach is appropriate and justified.</div>
+              </div>
+              <span class="rubric-detail">Strong</span><span class="rubric-score">18 / 20</span>
+            </div>
+
+            <div class="rubric-row">
+              <div>
+                <div class="rubric-name">Analysis</div>
+                <div class="rubric-detail">Findings are interpreted accurately.</div>
+              </div>
+              <span class="rubric-detail">Strong</span><span class="rubric-score">19 / 20</span>
+            </div>
+
+            <div class="rubric-row">
+              <div>
+                <div class="rubric-name">Evidence</div>
+                <div class="rubric-detail">Sources support key conclusions.</div>
+              </div>
+              <span class="rubric-detail">Good</span><span class="rubric-score">17 / 20</span>
+            </div>
+
+            <div class="rubric-row">
+              <div>
+                <div class="rubric-name">Communication</div>
+                <div class="rubric-detail">Structure is clear and concise.</div>
+              </div>
+              <span class="rubric-detail">Strong</span><span class="rubric-score">18 / 20</span>
+            </div>
+
+            <div class="total-score">
+              <span>FINAL EVALUATION</span>
+              <strong>90<span style="font-size:17px">/100</span></strong>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" style="background:var(--warm)">
+      <div class="site-container">
+        <div class="split-panel" data-reveal>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Teacher reviewing work with student" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+          <div class="split-copy">
+            <span class="eyebrow">Fair evaluation</span>
+            <h2>Make every score explainable.</h2>
+            <p>Attach comments and evidence to criteria so the final grade has a visible reason behind it.</p>
+
+            <div class="compact-stats">
+              <div class="compact-stat"><strong>4</strong><span>criteria</span></div>
+              <div class="compact-stat"><strong>90</strong><span>final score</span></div>
+              <div class="compact-stat"><strong class="green">94%</strong><span>rubric fit</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section dark-section" style="background:var(--charcoal)">
+      <div class="site-container">
+        <div class="split-panel" style="border-color:#343b35;background:transparent" data-reveal>
+
+          <div class="split-copy">
+            <span class="eyebrow">Review evidence</span>
+            <h2>Move from response to decision without losing context.</h2>
+            <p>Keep the submission, criteria and score relationship visible during review.</p>
+
+            <div class="data-list" style="border-color:#343b35">
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Evidence
+                  captured</span><span>08</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Criteria
+                  assessed</span><span>04 / 04</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Feedback
+                  status</span><span class="green">READY</span></div>
+            </div>
+          </div>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Professional reviewing documents and notes" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/5428003/pexels-photo-5428003.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer"></footer>
+  </main>
+
+
+  <!-- ==========================================================
+     REPORTS
+=========================================================== -->
+  <main id="reports" class="view">
+
+    <section class="page-hero">
+      <img src="https://images.pexels.com/photos/5905445/pexels-photo-5905445.jpeg?auto=compress&cs=tinysrgb&w=3840"
+        alt="Professional analyzing information on a laptop"
+        onerror="this.onerror=null;this.src='https://images.pexels.com/photos/620379/pexels-photo-620379.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-content">
+        <span class="eyebrow">04 / Reports</span>
+        <h1>Turn scores into signals.</h1>
+        <p>Understand cohort movement, performance gaps and assessment outcomes through focused reporting.</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-container">
+
+        <div class="section-heading" data-reveal>
+          <span class="eyebrow">Performance intelligence</span>
+          <h2>Read the direction, not just the number.</h2>
+        </div>
+
+        <div class="report-dashboard">
+
+          <div class="report-card large scan-line" data-reveal="left">
+            <div class="report-card-title">
+              <h3>Average score / eight assessment cycles</h3>
+              <span>LAST 8 CYCLES</span>
+            </div>
+
+            <div class="line-chart">
+              <svg viewBox="0 0 800 260" preserveAspectRatio="none" aria-label="Average score trend">
+                <path class="chart-line"
+                  d="M0 205 C75 195 90 173 145 182 S230 160 275 151 S350 163 405 135 S475 125 520 105 S610 116 655 74 S725 60 800 42" />
+              </svg>
+            </div>
+
+            <div class="chart-labels">
+              <span>01</span><span>02</span><span>03</span><span>04</span>
+              <span>05</span><span>06</span><span>07</span><span>08</span>
+            </div>
+          </div>
+
+          <div class="report-card small" data-reveal="right">
+            <div class="report-card-title">
+              <h3>Current average</h3><span>LIVE</span>
+            </div>
+            <div class="big-report-number count" data-count="87">0</div>
+            <div class="report-delta">↑ 6.4% versus previous cycle</div>
+
+            <div class="report-breakdown-list">
+              <div class="report-breakdown-item">
+                <span>Evaluated submissions</span>
+                <strong>1,420</strong>
+              </div>
+              <div class="report-breakdown-item">
+                <span>Highest score domain</span>
+                <strong class="green">98% (Analysis)</strong>
+              </div>
+              <div class="report-breakdown-item">
+                <span>Attention threshold</span>
+                <strong class="amber">74% (Evidence)</strong>
+              </div>
+              <div class="report-breakdown-item">
+                <span>Cycle benchmark</span>
+                <strong class="green">+2.1% target</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="report-card full" data-reveal>
+            <div class="report-card-title">
+              <h3>Cohort comparison</h3><span>PERFORMANCE BY GROUP</span>
+            </div>
+
+            <div class="comparison">
+              <div class="comparison-row"><label>Group A</label>
+                <div class="comparison-track">
+                  <div class="comparison-fill" style="--value:91%"></div>
+                </div><strong>91</strong>
+              </div>
+              <div class="comparison-row"><label>Group B</label>
+                <div class="comparison-track">
+                  <div class="comparison-fill" style="--value:84%"></div>
+                </div><strong>84</strong>
+              </div>
+              <div class="comparison-row"><label>Group C</label>
+                <div class="comparison-track">
+                  <div class="comparison-fill" style="--value:78%"></div>
+                </div><strong>78</strong>
+              </div>
+              <div class="comparison-row"><label>Group D</label>
+                <div class="comparison-track">
+                  <div class="comparison-fill" style="--value:72%"></div>
+                </div><strong>72</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" style="background:var(--warm)">
+      <div class="site-container">
+        <div class="split-panel" data-reveal>
+
+          <div class="split-image">
+            <img src="https://images.pexels.com/photos/620379/pexels-photo-620379.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Person analyzing data and charts" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+          <div class="split-copy">
+            <span class="eyebrow">Performance pulse</span>
+            <h2>See the change behind the score.</h2>
+            <p>Track movement across assessment cycles instead of relying on a single final number.</p>
+
+            <div class="compact-stats">
+              <div class="compact-stat"><strong>87</strong><span>average score</span></div>
+              <div class="compact-stat"><strong class="green">+6.4%</strong><span>cycle change</span></div>
+              <div class="compact-stat"><strong>4</strong><span>cohorts</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section dark-section" style="background:var(--charcoal)">
+      <div class="site-container">
+        <div class="split-panel" style="border-color:#343b35;background:transparent" data-reveal>
+
+          <div class="split-copy">
+            <span class="eyebrow">Decision view</span>
+            <h2>Move from report to next action.</h2>
+            <p>Surface the strongest and weakest areas so teams know where attention is needed.</p>
+
+            <div class="data-list" style="border-color:#343b35">
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Strongest
+                  domain</span><span class="green">ANALYSIS</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Needs
+                  attention</span><span class="amber">EVIDENCE</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Priority
+                  shift</span><span>+12%</span></div>
+            </div>
+          </div>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/5428003/pexels-photo-5428003.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Team discussing analytical information" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3184423/pexels-photo-3184423.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer"></footer>
+  </main>
+
+
+  <!-- ==========================================================
+     CONTACT
+=========================================================== -->
+  <main id="contact" class="view">
+
+    <section class="page-hero">
+      <img src="https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=3840"
+        alt="Professional team discussing work"
+        onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+      <div class="page-hero-grid"></div>
+      <div class="page-hero-content">
+        <span class="eyebrow">05 / Contact</span>
+        <h1>Talk assessment operations.</h1>
+        <p>Questions about evaluation workflows, reporting or getting your team started? Send us a message.</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="site-container">
+
+        <div class="contact-layout">
+
+          <div class="contact-copy" data-reveal="left">
+            <span class="eyebrow">Support desk</span>
+            <h2>Let's make assessment work clearer.</h2>
+            <p>Tell us what you are trying to evaluate, where your current workflow gets difficult, and what you want
+              your
+              data to show.</p>
+
+            <div class="contact-details">
+              <div class="contact-detail-card">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </div>
+                <div class="contact-detail-text">
+                  <span>Email Us</span>
+                  <strong>hello@assessiq.example</strong>
+                </div>
+              </div>
+
+              <div class="contact-detail-card">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </div>
+                <div class="contact-detail-text">
+                  <span>Direct Support Line</span>
+                  <strong>+1 (800) 555-0199</strong>
+                </div>
+              </div>
+
+              <div class="contact-detail-card">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </div>
+                <div class="contact-detail-text">
+                  <span>Headquarters</span>
+                  <strong>AssessIQ HQ · Silicon Valley, CA</strong>
+                </div>
+              </div>
+
+              <div class="contact-detail-card">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <div class="contact-detail-text">
+                  <span>Response Window</span>
+                  <strong>Within 1 business hour (24/7 Desk)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm" data-reveal="right">
+
+              <div class="form-grid">
+
+                <div class="field">
+                  <label for="contactName">Name</label>
+                  <input id="contactName" name="name" type="text" autocomplete="name" required>
+                </div>
+
+                <div class="field">
+                  <label for="contactEmail">Email</label>
+                  <input id="contactEmail" name="email" type="email" autocomplete="email" required>
+                </div>
+
+                <div class="field">
+                  <label for="contactTopic">Topic</label>
+                  <select id="contactTopic">
+                    <option>Assessment workflow</option>
+                    <option>Question bank</option>
+                    <option>Evaluation</option>
+                    <option>Reports</option>
+                    <option>General enquiry</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="contactOrg">Organization</label>
+                  <input id="contactOrg" name="organization" type="text" autocomplete="organization">
+                </div>
+
+                <div class="field full">
+                  <label for="contactMessage">Message</label>
+                  <textarea id="contactMessage" required></textarea>
+                </div>
+
+              </div>
+
+              <div class="form-submit">
+                <span class="form-message" id="contactMessageStatus"></span>
+                <button class="btn btn-primary" type="submit">Send message →</button>
+              </div>
+
+              <div class="form-social-connect">
+                <div class="social-bar-label">
+                  <strong class="follow-us-tag">FOLLOW US:</strong>
+                  <span>QUICK SIGN-IN &amp; SOCIAL CONNECT</span>
+                </div>
+
+                <div class="social-icon-row">
+                  <button type="button" class="social-btn social-google" data-auth="login"
+                    aria-label="Sign in with Google" title="Connect with Google">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4" />
+                      <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853" />
+                      <path
+                        d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.62z"
+                        fill="#FBBC05" />
+                      <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                        fill="#EA4335" />
+                    </svg>
+                    <span>Google</span>
+                  </button>
+
+                  <button type="button" class="social-btn social-microsoft" data-auth="login"
+                    aria-label="Sign in with Microsoft" title="Connect with Microsoft">
+                    <svg viewBox="0 0 23 23" aria-hidden="true">
+                      <path fill="#f35325" d="M1 1h10v10H1z" />
+                      <path fill="#81bc06" d="M12 1h10v10H1z" />
+                      <path fill="#05a6f0" d="M1 12h10v10H1z" />
+                      <path fill="#ffba08" d="M12 12h10v10H12z" />
+                    </svg>
+                    <span>Microsoft</span>
+                  </button>
+
+                  <button type="button" class="social-btn social-linkedin" data-auth="login"
+                    aria-label="Sign in with LinkedIn" title="Connect with LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true">
+                      <path
+                        d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2Z" />
+                    </svg>
+                    <span>LinkedIn</span>
+                  </button>
+
+                  <button type="button" class="social-btn social-github" data-auth="login"
+                    aria-label="Sign in with GitHub" title="Connect with GitHub">
+                    <svg viewBox="0 0 24 24" fill="#181717" aria-hidden="true">
+                      <path
+                        d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    <span>GitHub</span>
+                  </button>
+                </div>
+              </div>
+
+            </form>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" style="background:var(--warm)">
+      <div class="site-container">
+        <div class="split-panel" data-reveal>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/3184423/pexels-photo-3184423.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Team meeting around a table" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+          <div class="split-copy">
+            <span class="eyebrow">Talk to the team</span>
+            <h2>Bring the workflow. We'll bring the structure.</h2>
+            <p>Start with the assessment process you already have and identify the places where clarity can improve. Our
+              team works directly with your educators to build tailored rubrics and evaluation systems.</p>
+
+            <div class="split-features" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);">
+                <span style="color:var(--emerald);font-weight:700;">✓</span>
+                <span><strong>Dedicated Onboarding:</strong> Direct 1-on-1 guidance with assessment specialists.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);">
+                <span style="color:var(--emerald);font-weight:700;">✓</span>
+                <span><strong>Custom Rubrics:</strong> Import and calibrate existing grading criteria seamlessly.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);">
+                <span style="color:var(--emerald);font-weight:700;">✓</span>
+                <span><strong>Institutional Analytics:</strong> Departmental performance tracking and reporting
+                  models.</span>
+              </div>
+            </div>
+
+            <div class="compact-stats">
+              <div class="compact-stat"><strong>01</strong><span>workflow review</span></div>
+              <div class="compact-stat"><strong>02</strong><span>setup guidance</span></div>
+              <div class="compact-stat"><strong>03</strong><span>reporting plan</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section dark-section" style="background:var(--charcoal)">
+      <div class="site-container">
+        <div class="split-panel" style="border-color:#343b35;background:transparent" data-reveal>
+
+          <div class="split-copy">
+            <span class="eyebrow">Support signal</span>
+            <h2>Clear answers. Focused next steps.</h2>
+            <p>Keep communication close to the assessment workflow instead of sending teams through disconnected
+              systems.</p>
+
+            <div class="data-list" style="border-color:#343b35">
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">First
+                  response</span><span>1 DAY</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Workflow
+                  focus</span><span>ASSESSMENT</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Status</span><span
+                  class="green">AVAILABLE</span></div>
+            </div>
+          </div>
+
+          <div class="split-image">
+            <img
+              src="https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?auto=compress&cs=tinysrgb&w=3840"
+              alt="Colleagues collaborating in a professional meeting" loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.pexels.com/photos/3182833/pexels-photo-3182833.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================================
+     DASHBOARD (Using Main Website Header)
+=========================================================== -->
+  <main id="dashboard" class="view">
+
+    <div class="dashboard-body">
+      <div class="site-container">
+
+        <div class="dashboard-welcome" data-reveal>
+          <div>
+            <span class="eyebrow">Workspace / Overview</span>
+            <h1>Performance at a glance.</h1>
+            <p>Current assessment activity, evaluation flow and reporting signals.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-stats stagger" data-reveal>
+
+          <div class="dash-stat" style="--accent:var(--amber)">
+            <span class="dash-stat-label">Active assessments</span>
+            <strong class="dash-stat-number count" data-count="37">0</strong>
+            <span class="dash-stat-change">+4 this week</span>
+          </div>
+
+          <div class="dash-stat" style="--accent:var(--emerald)">
+            <span class="dash-stat-label">Average score</span>
+            <strong class="dash-stat-number count" data-count="87">0</strong>
+            <span class="dash-stat-change">+6.4% cycle-over-cycle</span>
+          </div>
+
+          <div class="dash-stat" style="--accent:var(--amber)">
+            <span class="dash-stat-label">Pending evaluation</span>
+            <strong class="dash-stat-number count" data-count="12">0</strong>
+            <span class="dash-stat-change">−5 since yesterday</span>
+          </div>
+
+          <div class="dash-stat" style="--accent:var(--emerald)">
+            <span class="dash-stat-label">Rubric alignment</span>
+            <strong class="dash-stat-number count" data-count="94">0</strong>
+            <span class="dash-stat-change">+2.1% this cycle</span>
+          </div>
+
+        </div>
+
+        <div class="dashboard-grid">
+
+          <section class="dash-panel scan-line" data-reveal="left">
+            <div class="dash-panel-head">
+              <h2>Assessment activity</h2>
+              <span>LAST 10 DAYS</span>
+            </div>
+
+            <div class="dashboard-chart">
+              <span class="dashboard-chart-bar" style="--h:34%"></span>
+              <span class="dashboard-chart-bar" style="--h:46%"></span>
+              <span class="dashboard-chart-bar" style="--h:42%"></span>
+              <span class="dashboard-chart-bar" style="--h:61%"></span>
+              <span class="dashboard-chart-bar" style="--h:57%"></span>
+              <span class="dashboard-chart-bar" style="--h:69%"></span>
+              <span class="dashboard-chart-bar" style="--h:76%"></span>
+              <span class="dashboard-chart-bar" style="--h:64%"></span>
+              <span class="dashboard-chart-bar" style="--h:82%"></span>
+              <span class="dashboard-chart-bar" style="--h:92%"></span>
+            </div>
+          </section>
+
+          <section class="dash-panel" data-reveal="right">
+            <div class="dash-panel-head">
+              <h2>Evaluation queue</h2>
+              <span>12 OPEN</span>
+            </div>
+
+            <div class="dashboard-list">
+              <div class="dash-list-row"><strong>Research Methods</strong><span class="amber">05</span></div>
+              <div class="dash-list-row"><strong>Statistics Midterm</strong><span class="amber">03</span></div>
+              <div class="dash-list-row"><strong>Analytics Quiz</strong><span class="green">02</span></div>
+              <div class="dash-list-row"><strong>Writing Portfolio</strong><span>02</span></div>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="dashboard-bottom-grid">
+
+          <section class="dash-panel" data-reveal>
+            <div class="dash-panel-head">
+              <h2>Latest assessment</h2>
+              <span>UPDATED 09:42</span>
+            </div>
+
+            <div class="dashboard-list">
+              <div class="dash-list-row"><strong>Applied Statistics / Midterm</strong><span class="green">84%</span>
+              </div>
+              <div class="dash-list-row"><strong>Responses</strong><span>128 / 142</span></div>
+              <div class="dash-list-row"><strong>Evaluation</strong><span>96 / 128</span></div>
+            </div>
+          </section>
+
+          <section class="dash-panel" data-reveal>
+            <div class="dash-panel-head">
+              <h2>Report signal</h2>
+              <span>THIS CYCLE</span>
+            </div>
+
+            <div class="dashboard-list">
+              <div class="dash-list-row"><strong>Strongest domain</strong><span class="green">ANALYSIS</span></div>
+              <div class="dash-list-row"><strong>Attention area</strong><span class="amber">EVIDENCE</span></div>
+              <div class="dash-list-row"><strong>Overall movement</strong><span class="green">+6.4%</span></div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ADDITIONAL DASHBOARD INFORMATION PANELS -->
+        <div class="dashboard-bottom-grid">
+
+          <section class="dash-panel" data-reveal="left">
+            <div class="dash-panel-head">
+              <h2>Domain mastery breakdown</h2>
+              <span>LAST CYCLE</span>
+            </div>
+
+            <div class="dashboard-list">
+              <div class="dash-list-row"><strong>Quantitative Analysis</strong><span class="green">94% MASTERY</span>
+              </div>
+              <div class="dash-list-row"><strong>Analytical Reasoning</strong><span class="green">88% MASTERY</span>
+              </div>
+              <div class="dash-list-row"><strong>Evidence Synthesis</strong><span class="amber">76% ATTENTION</span>
+              </div>
+              <div class="dash-list-row"><strong>Conceptual Foundations</strong><span class="green">91% MASTERY</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="dash-panel" data-reveal="right">
+            <div class="dash-panel-head">
+              <h2>Upcoming milestones & schedule</h2>
+              <span>SCHEDULED</span>
+            </div>
+
+            <div class="dashboard-list">
+              <div class="dash-list-row"><strong>Final Assessment Draft</strong><span class="amber">OCT 12</span></div>
+              <div class="dash-list-row"><strong>Rubric Calibration Workshop</strong><span class="green">OCT 18</span>
+              </div>
+              <div class="dash-list-row"><strong>Midterm Grade Verification</strong><span class="green">OCT 22</span>
+              </div>
+              <div class="dash-list-row"><strong>Automated Feedback Audit</strong><span class="green">OCT 28</span>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="publicFooter">
+    <div class="site-container">
+      <div class="footer-top">
+
+        <!-- Brand & Description -->
+        <div class="footer-brand-col">
+          <a class="brand" href="#home" data-route="home" aria-label="AssessIQ Home">
+            <img src="logo.png" alt="AssessIQ Logo" class="brand-logo-img"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+            <span class="brand-mark" style="display:none">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M6 25 13 7h6l7 18h-5l-1.6-4.5h-7.8L10 25H6Zm7-8h5l-2.5-6.7L13 17Z" fill="currentColor" />
+              </svg>
+            </span>
+          </a>
+          <p>A unified assessment & evaluation platform built for precision, automated scoring, and real-time analytical
+            reporting.</p>
+
+          <div class="social-links">
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-button" aria-label="Twitter / X"
+              title="Twitter / X">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-button" aria-label="LinkedIn"
+              title="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" class="social-button" aria-label="GitHub"
+              title="GitHub">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z" />
+              </svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener" class="social-button" aria-label="YouTube"
+              title="YouTube">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 1: Primary Navigation (Max 3 links) -->
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#home" data-route="home">Home Overview</a></li>
+            <li><a href="#assessments" data-route="assessments">Assessments</a></li>
+            <li><a href="#reports" data-route="reports">Reports & Analytics</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 2: Platform Features (Max 3 links) -->
+        <div class="footer-col">
+          <h4>Platform Features</h4>
+          <ul>
+            <li><a href="#questions" data-route="questions">Question Bank</a></li>
+            <li><a href="#evaluation" data-route="evaluation">Evaluation Engine</a></li>
+            <li><a href="#contact" data-route="contact">Help & Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Workspace (Max 3 links) -->
+        <div class="footer-col">
+          <h4>Workspace</h4>
+          <ul>
+            <li><a href="#dashboard" data-route="dashboard">Instructor Portal</a></li>
+            <li><a href="#" data-auth="login">Sign In</a></li>
+            <li><a href="#" data-auth="signup">Create Account</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Column -->
+        <div class="footer-newsletter-col">
+          <h4>Subscribe Newsletter</h4>
+          <p>Get technical assessment updates, grading rubrics, and platform signal reports directly.</p>
+          <form class="newsletter-form" id="footerNewsletterForm">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter work email" required
+                aria-label="Work email address">
+              <button type="submit" class="btn btn-primary newsletter-btn">Subscribe</button>
+            </div>
+            <div class="newsletter-message" id="newsletterMessage"></div>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          © 2026 AssessIQ Assessment & Evaluation Platform. All rights reserved.
+        </div>
+
+        <button class="back-top" type="button" aria-label="Scroll back to top">
+          <span>Back to top</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ==========================================================
+     LOGIN
+=========================================================== -->
+  <div class="auth-overlay" id="loginOverlay" aria-hidden="true">
+
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+
+      <div class="auth-image">
+        <img src="https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&cs=tinysrgb&w=3840"
+          alt="Professional working with assessment information"
+          onerror="this.onerror=null;this.src='https://images.pexels.com/photos/5905445/pexels-photo-5905445.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+
+        <div class="auth-image-copy">
+          <span class="eyebrow">AssessIQ workspace</span>
+          <h2>Bring every evaluation signal together.</h2>
+          <p>Continue where your assessment workflow left off.</p>
+        </div>
+      </div>
+
+      <div class="auth-form-side">
+
+        <!-- FIXED: logo now explicitly returns to Home -->
+        <a href="#home" class="brand auth-logo" data-auth-home aria-label="Return to AssessIQ Home">
+          <span class="brand-mark">
+            <svg viewBox="0 0 32 32">
+              <path d="M6 25 13 7h6l7 18h-5l-1.6-4.5h-7.8L10 25H6Zm7-8h5l-2.5-6.7L13 17Z" fill="currentColor" />
+            </svg>
+          </span>
+          <span class="brand-text">Assess<span>IQ</span></span>
+        </a>
+
+        <button class="auth-close" type="button" data-close-auth aria-label="Close login">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="m6 6 12 12M18 6 6 18" />
+          </svg>
+        </button>
+
+        <div class="auth-heading">
+          <span class="eyebrow">Welcome back</span>
+          <h2 id="loginTitle">Log in to AssessIQ.</h2>
+          <p>Access your assessments, evaluations and reports.</p>
+        </div>
+
+        <form class="auth-form" id="loginForm">
+
+          <div class="field">
+            <label for="loginEmail">Email address</label>
+            <input id="loginEmail" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required>
+          </div>
+
+          <div class="auth-row">
+            <label class="remember"><input type="checkbox"> Remember me</label>
+            <button class="forgot" type="button">Forgot password?</button>
+          </div>
+
+          <button class="btn btn-primary auth-submit" type="submit">Log in →</button>
+
+          <button class="social-login" type="button">
+            <svg class="google-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4"
+                d="M23.49 12.27c0-.79-.07-1.55-.2-2.27H12v4.3h6.45a5.52 5.52 0 0 1-2.39 3.62v3.01h3.87c2.27-2.09 3.56-5.17 3.56-8.66Z" />
+              <path fill="#34A853"
+                d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.87-3.01c-1.07.72-2.44 1.15-4.06 1.15-3.12 0-5.77-2.11-6.72-4.95H1.28v3.1A11.99 11.99 0 0 0 12 24Z" />
+              <path fill="#FBBC05"
+                d="M5.28 14.28A7.21 7.21 0 0 1 4.9 12c0-.79.14-1.56.38-2.28v-3.1H1.28A12 12 0 0 0 0 12c0 1.94.46 3.77 1.28 5.38l4-3.1Z" />
+              <path fill="#EA4335"
+                d="M12 4.77c1.76 0 3.34.61 4.59 1.8l3.44-3.44C17.94 1.14 15.24 0 12 0A11.99 11.99 0 0 0 1.28 6.62l4 3.1C5.23 6.88 7.88 4.77 12 4.77Z" />
+            </svg>
+            Continue with Google
+          </button>
+
+          <div class="auth-switch">
+            Don't have an account?
+            <button type="button" data-switch-auth="signup">Create one</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================
+     SIGNUP
+     FIX: overlay scrolls naturally on mobile.
+     NO fixed-height internal form.
+=========================================================== -->
+  <div class="auth-overlay" id="signupOverlay" aria-hidden="true">
+
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+
+      <div class="auth-image">
+        <img src="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=3840"
+          alt="Team reviewing learning and performance work"
+          onerror="this.onerror=null;this.src='https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=2400';">
+
+        <div class="auth-image-copy">
+          <span class="eyebrow">Start measuring</span>
+          <h2>Build a clearer assessment operation.</h2>
+          <p>Create assessments, evaluate evidence and turn results into useful signals.</p>
+        </div>
+      </div>
+
+      <div class="auth-form-side">
+
+        <!-- FIXED: clickable logo returns Home -->
+        <a href="#home" class="brand auth-logo" data-auth-home aria-label="Return to AssessIQ Home">
+          <span class="brand-mark">
+            <svg viewBox="0 0 32 32">
+              <path d="M6 25 13 7h6l7 18h-5l-1.6-4.5h-7.8L10 25H6Zm7-8h5l-2.5-6.7L13 17Z" fill="currentColor" />
+            </svg>
+          </span>
+          <span class="brand-text">Assess<span>IQ</span></span>
+        </a>
+
+        <button class="auth-close" type="button" data-close-auth aria-label="Close signup">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="m6 6 12 12M18 6 6 18" />
+          </svg>
+        </button>
+
+        <div class="auth-heading">
+          <span class="eyebrow">Create workspace</span>
+          <h2 id="signupTitle">Start with AssessIQ.</h2>
+          <p>Set up your assessment workspace in a few steps.</p>
+        </div>
+
+        <form class="auth-form" id="signupForm">
+
+          <div class="form-grid">
+
+            <div class="field">
+              <label for="signupFirst">First name</label>
+              <input id="signupFirst" type="text" autocomplete="given-name" required>
+            </div>
+
+            <div class="field">
+              <label for="signupLast">Last name</label>
+              <input id="signupLast" type="text" autocomplete="family-name" required>
+            </div>
+
+            <div class="field full">
+              <label for="signupEmail">Work email</label>
+              <input id="signupEmail" type="email" autocomplete="email" required>
+            </div>
+
+            <div class="field full">
+              <label for="signupPassword">Password</label>
+              <input id="signupPassword" type="password" autocomplete="new-password" minlength="6" required>
+            </div>
+
+          </div>
+
+          <label class="remember" style="margin:16px 0">
+            <input type="checkbox" required>
+            I agree to the Terms and Privacy Policy.
+          </label>
+
+          <button class="btn btn-primary auth-submit" type="submit">Create workspace →</button>
+
+          <button class="social-login" type="button">
+            <svg class="google-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4"
+                d="M23.49 12.27c0-.79-.07-1.55-.2-2.27H12v4.3h6.45a5.52 5.52 0 0 1-2.39 3.62v3.01h3.87c2.27-2.09 3.56-5.17 3.56-8.66Z" />
+              <path fill="#34A853"
+                d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.87-3.01c-1.07.72-2.44 1.15-4.06 1.15-3.12 0-5.77-2.11-6.72-4.95H1.28v3.1A11.99 11.99 0 0 0 12 24Z" />
+              <path fill="#FBBC05"
+                d="M5.28 14.28A7.21 7.21 0 0 1 4.9 12c0-.79.14-1.56.38-2.28v-3.1H1.28A12 12 0 0 0 0 12c0 1.94.46 3.77 1.28 5.38l4-3.1Z" />
+              <path fill="#EA4335"
+                d="M12 4.77c1.76 0 3.34.61 4.59 1.8l3.44-3.44C17.94 1.14 15.24 0 12 0A11.99 11.99 0 0 0 1.28 6.62l4 3.1C5.23 6.88 7.88 4.77 12 4.77Z" />
+            </svg>
+            Continue with Google
+          </button>
+
+          <div class="auth-switch">
+            Already have an account?
+            <button type="button" data-switch-auth="login">Log in</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="toast" id="toast"></div>
+
+
+  <script>
+    /* ==========================================================
+       ASSESIQ APP
+    ========================================================== */
+
+    const routes = [
+      "home",
+      "assessments",
+      "questions",
+      "evaluation",
+      "reports",
+      "contact",
+      "dashboard"
+    ];
+
+    const publicNav = document.getElementById("publicNav");
+    const mobileNav = document.getElementById("mobileNav");
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+
+    function getRoute() {
+      const route = location.hash.replace("#", "");
+      return routes.includes(route) ? route : "home";
+    }
+
+    function closeMobileMenu() {
+      mobileNav.classList.remove("open");
+      mobileMenuButton.setAttribute("aria-expanded", "false");
+    }
+
+    function setRoute(route, changeHash = true) {
+
+      if (!routes.includes(route)) route = "home";
+
+      document.querySelectorAll(".view").forEach(view => {
+        view.classList.toggle("active", view.id === route);
+      });
+
+      document.querySelectorAll(".nav-link, #mobileNav a[data-route]").forEach(link => {
+        link.classList.toggle("active", link.dataset.route === route);
+      });
+
+      /*
+        On Dashboard view: navigation links and footer are hidden.
+        Header logo and Logout button remain visible.
+      */
+      const isDashboard = route === "dashboard";
+
+      publicNav.style.display = "";
+      const navLinks = publicNav ? publicNav.querySelector(".nav-links") : null;
+      if (navLinks) navLinks.style.display = isDashboard ? "none" : "";
+
+      if (mobileMenuButton) mobileMenuButton.style.display = isDashboard ? "none" : "";
+
+      const publicFooter = document.getElementById("publicFooter");
+      if (publicFooter) publicFooter.style.display = isDashboard ? "none" : "";
+
+      const publicAuthActions = document.getElementById("publicAuthActions");
+      const headerLogoutBtn = document.getElementById("headerLogoutBtn");
+
+      if (publicAuthActions) publicAuthActions.style.display = isDashboard ? "none" : "flex";
+      if (headerLogoutBtn) headerLogoutBtn.style.display = isDashboard ? "inline-flex" : "none";
+
+      const titles = {
+        home: "AssessIQ — Assessment & Evaluation Platform",
+        assessments: "Assessments — AssessIQ",
+        questions: "Question Bank — AssessIQ",
+        evaluation: "Evaluation — AssessIQ",
+        reports: "Reports — AssessIQ",
+        contact: "Contact — AssessIQ",
+        dashboard: "Dashboard — AssessIQ"
+      };
+
+      document.title = titles[route];
+
+      if (changeHash && location.hash !== "#" + route) {
+        history.pushState({ route }, "", "#" + route);
+      }
+
+      closeMobileMenu();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      setTimeout(runAnimations, 80);
+    }
+
+
+    /* ==========================================================
+       ROUTING CLICKS
+    ========================================================== */
+
+    document.addEventListener("click", event => {
+
+      const routeLink = event.target.closest("[data-route]");
+
+      if (routeLink) {
+        event.preventDefault();
+        setRoute(routeLink.dataset.route);
+        return;
+      }
+
+      const routeButton = event.target.closest("[data-route-button]");
+
+      if (routeButton) {
+        event.preventDefault();
+        setRoute(routeButton.dataset.routeButton);
+        return;
+      }
+
+      const authTrigger = event.target.closest("[data-auth]");
+
+      if (authTrigger) {
+        event.preventDefault();
+        closeMobileMenu();
+        openAuth(authTrigger.dataset.auth);
+        return;
+      }
+
+      const closeAuth = event.target.closest("[data-close-auth]");
+
+      if (closeAuth) {
+        event.preventDefault();
+        closeAuthModals();
+        return;
+      }
+
+      const authHome = event.target.closest("[data-auth-home]");
+
+      if (authHome) {
+        event.preventDefault();
+        closeAuthModals();
+        setRoute("home");
+        return;
+      }
+
+      const switchAuth = event.target.closest("[data-switch-auth]");
+
+      if (switchAuth) {
+        event.preventDefault();
+        openAuth(switchAuth.dataset.switchAuth);
+        return;
+      }
+
+      const backTop = event.target.closest(".back-top");
+
+      if (backTop) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    window.addEventListener("hashchange", () => setRoute(getRoute(), false));
+
+    window.addEventListener("popstate", () => setRoute(getRoute(), false));
+
+
+    /* ==========================================================
+       MOBILE MENU
+    ========================================================== */
+
+    mobileMenuButton.addEventListener("click", () => {
+      const open = mobileNav.classList.toggle("open");
+      mobileMenuButton.setAttribute("aria-expanded", String(open));
+    });
+
+
+    /* ==========================================================
+       IMAGE FALLBACK
+    ========================================================== */
+
+    document.querySelectorAll("img").forEach(img => {
+      img.addEventListener("error", function () {
+
+        if (this.dataset.fallbackApplied) return;
+
+        this.dataset.fallbackApplied = "true";
+
+        this.src =
+          "https://images.pexels.com/photos/5905710/pexels-photo-5905710.jpeg?auto=compress&cs=tinysrgb&w=2400";
+      });
+    });
+
+
+    /* ==========================================================
+       AUTH
+    ========================================================== */
+
+    const loginOverlay = document.getElementById("loginOverlay");
+    const signupOverlay = document.getElementById("signupOverlay");
+
+    function openAuth(type) {
+
+      closeAuthModals();
+
+      const overlay = type === "signup" ? signupOverlay : loginOverlay;
+
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+
+      document.body.classList.add("modal-open");
+
+      /*
+        Reset mobile scroll position to the top whenever
+        Login/Signup opens.
+      */
+      overlay.scrollTop = 0;
+
+      setTimeout(() => {
+        const firstInput = overlay.querySelector("input");
+        if (firstInput) firstInput.focus();
+      }, 120);
+    }
+
+    function closeAuthModals() {
+
+      [loginOverlay, signupOverlay].forEach(overlay => {
+        overlay.classList.remove("active");
+        overlay.setAttribute("aria-hidden", "true");
+        overlay.scrollTop = 0;
+      });
+
+      document.body.classList.remove("modal-open");
+    }
+
+    [loginOverlay, signupOverlay].forEach(overlay => {
+
+      overlay.addEventListener("click", event => {
+        if (event.target === overlay) {
+          closeAuthModals();
+        }
+      });
+
+    });
+
+
+    /* ==========================================================
+       LOGIN
+    ========================================================== */
+
+    document.getElementById("loginForm").addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      const button = event.currentTarget.querySelector(".auth-submit");
+      const original = button.textContent;
+
+      button.disabled = true;
+      button.textContent = "Signing in…";
+
+      setTimeout(() => {
+
+        button.textContent = "Signed in ✓";
+        button.style.background = "var(--emerald)";
+        button.style.color = "#fff";
+
+        setTimeout(() => {
+
+          button.disabled = false;
+          button.textContent = original;
+          button.style.background = "";
+          button.style.color = "";
+
+          closeAuthModals();
+          setRoute("dashboard");
+
+          showToast("Welcome back. Dashboard opened.");
+
+        }, 650);
+
+      }, 650);
+    });
+
+
+    /* ==========================================================
+       SIGNUP
+    ========================================================== */
+
+    document.getElementById("signupForm").addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      const button = event.currentTarget.querySelector(".auth-submit");
+      const original = button.textContent;
+
+      button.disabled = true;
+      button.textContent = "Creating…";
+
+      setTimeout(() => {
+
+        button.textContent = "Workspace created ✓";
+        button.style.background = "var(--emerald)";
+        button.style.color = "#fff";
+
+        setTimeout(() => {
+
+          button.disabled = false;
+          button.textContent = original;
+          button.style.background = "";
+          button.style.color = "";
+
+          closeAuthModals();
+          setRoute("dashboard");
+
+          showToast("Workspace created. Welcome to AssessIQ.");
+
+        }, 650);
+
+      }, 650);
+    });
+
+
+    /* ==========================================================
+       LOGOUT
+    ========================================================== */
+
+    const headerLogoutBtn = document.getElementById("headerLogoutBtn");
+    if (headerLogoutBtn) {
+      headerLogoutBtn.addEventListener("click", () => {
+        showToast("You have been logged out.");
+        setTimeout(() => {
+          setRoute("home");
+        }, 450);
+      });
+    }
+
+    const dashboardLogout = document.getElementById("dashboardLogout");
+    if (dashboardLogout) {
+      dashboardLogout.addEventListener("click", () => {
+        showToast("You have been logged out.");
+        setTimeout(() => {
+          setRoute("home");
+        }, 450);
+      });
+    }
+
+
+    /* ==========================================================
+       CONTACT FORM
+    ========================================================== */
+
+    document.getElementById("contactForm").addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      const status = document.getElementById("contactMessageStatus");
+
+      status.textContent = "Message received — we'll be in touch.";
+
+      event.currentTarget.reset();
+
+      setTimeout(() => {
+        status.textContent = "";
+      }, 5000);
+
+    });
+
+
+    /* ==========================================================
+       TOAST
+    ========================================================== */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2800);
+    }
+
+
+    /* ==========================================================
+       ANIMATION OBSERVER
+    ========================================================== */
+
+    const observer = new IntersectionObserver(entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+
+      });
+
+    }, {
+      threshold: .12,
+      rootMargin: "0px 0px -30px 0px"
+    });
+
+
+    function animateCount(element) {
+
+      if (element.dataset.counted === "true") return;
+
+      element.dataset.counted = "true";
+
+      const target = Number(element.dataset.count || 0);
+      const duration = 1050;
+      const start = performance.now();
+
+      function tick(now) {
+
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        element.textContent =
+          Math.round(target * eased).toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+
+    function runAnimations() {
+
+      document.querySelectorAll("[data-reveal],.stagger,.scan-line").forEach(element => {
+        observer.observe(element);
+      });
+
+      document.querySelectorAll(".count").forEach(element => {
+
+        if (element.dataset.counted === "true") return;
+
+        const rect = element.getBoundingClientRect();
+
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          animateCount(element);
+        }
+
+      });
+    }
+
+
+    window.addEventListener("scroll", () => {
+
+      document.querySelectorAll(".count").forEach(element => {
+
+        if (element.dataset.counted === "true") return;
+
+        const rect = element.getBoundingClientRect();
+
+        if (rect.top < window.innerHeight - 30 && rect.bottom > 0) {
+          animateCount(element);
+        }
+
+      });
+
+    }, { passive: true });
+
+
+    /* ==========================================================
+       NEWSLETTER SUBMISSION
+    ========================================================== */
+
+    const newsletterForm = document.getElementById("footerNewsletterForm");
+    if (newsletterForm) {
+      newsletterForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const msg = document.getElementById("newsletterMessage");
+        const input = newsletterForm.querySelector("input[type='email']");
+        if (msg && input) {
+          msg.textContent = `Subscribed successfully: ${input.value}`;
+          input.value = "";
+          setTimeout(() => {
+            msg.textContent = "";
+          }, 4000);
+        }
+      });
+    }
+
+
+    /* ==========================================================
+       INITIALIZE
+    ========================================================== */
+
+    setRoute(getRoute(), false);
+    runAnimations();
+
+  </script>
+
+</body>
+
+</html>
