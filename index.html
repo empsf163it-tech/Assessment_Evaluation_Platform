@@ -825,6 +825,32 @@
       color: var(--charcoal);
     }
 
+    .dark-section .data-list {
+      border-color: #384039 !important;
+    }
+
+    .dark-section .data-list-row {
+      border-color: #384039 !important;
+    }
+
+    .dark-section .data-list-row span:first-child {
+      color: #e2e8e2 !important;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .dark-section .data-list-row span:last-child {
+      color: #ffffff !important;
+    }
+
+    .dark-section .data-list-row span.green {
+      color: #79d5a3 !important;
+    }
+
+    .dark-section .data-list-row span.amber {
+      color: #f2c66d !important;
+    }
+
     /* WORKFLOW */
     .workflow-grid {
       display: grid;
@@ -1296,6 +1322,7 @@
       gap: 18px;
       padding: 23px 0;
       border-bottom: 1px solid var(--line);
+      align-items: center;
       transition: .25s ease;
     }
 
@@ -1308,15 +1335,24 @@
       font: 10px "IBM Plex Mono", monospace;
     }
 
+    .question-item > div {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .question-item h3 {
       font-size: 14px;
       line-height: 1.4;
+      text-align: center;
     }
 
     .question-tags {
       margin-top: 8px;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 5px;
     }
 
@@ -2370,10 +2406,15 @@
       inset: 0;
       z-index: 2000;
       display: none;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 24px;
+      padding: 30px 16px;
       background: rgba(12, 15, 13, .86);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
     .auth-overlay.active {
@@ -2384,10 +2425,12 @@
     .auth-modal {
       position: relative;
       width: min(100%, 1000px);
-      min-height: 590px;
+      margin: auto;
+      min-height: 560px;
       display: grid;
       grid-template-columns: .95fr 1.05fr;
       background: #fff;
+      border-radius: 12px;
       box-shadow: 0 35px 100px rgba(0, 0, 0, .4);
       animation: authIn .4s cubic-bezier(.2, .8, .2, 1) both;
     }
@@ -3025,13 +3068,27 @@
       }
 
       .timeline-item {
-        grid-template-columns: 75px 1fr;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         gap: 12px;
-        padding: 14px 0;
+        padding: 16px 0;
+        align-items: center;
+      }
+
+      .timeline-stage {
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .timeline-title {
+        font-size: 13.5px;
       }
 
       .timeline-status {
-        grid-column: 2
+        grid-column: auto;
+        font-size: 10px;
+        text-align: right;
+        white-space: nowrap;
       }
 
       .assessment-row {
@@ -3125,59 +3182,130 @@
         display: none
       }
 
-      /*
-    FIX:
-    The signup/login overlay itself becomes the scrolling surface.
-    There is NO fixed-height internal form and NO nested scrollbar.
-  */
+      /* Unified responsive Auth Modal styling across mobile and small devices */
       body.modal-open {
-        overflow: auto;
+        overflow: hidden;
       }
 
       .auth-overlay {
         position: fixed;
         inset: 0;
-        padding: 0;
+        z-index: 2000;
+        padding: 20px 16px;
+        display: none;
         align-items: flex-start;
-        justify-content: flex-start;
+        justify-content: center;
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
-        background: #fff;
+        background: rgba(12, 15, 13, 0.86);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      }
+
+      .auth-overlay.active {
+        display: flex;
       }
 
       .auth-modal {
+        position: relative;
         width: 100%;
-        min-height: 100%;
+        max-width: 480px;
+        min-height: auto;
         height: auto;
-        display: block;
-        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+        overflow: hidden;
+        margin: auto;
       }
 
       .auth-image {
-        display: none
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 180px;
+        min-height: 180px;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+
+      .auth-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .auth-image:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(15, 18, 16, .85) 0%, rgba(15, 18, 16, .35) 60%, rgba(15, 18, 16, .15) 100%);
+      }
+
+      .auth-image-copy {
+        position: absolute;
+        z-index: 2;
+        left: 20px;
+        right: 20px;
+        bottom: 16px;
+        color: #fff;
+      }
+
+      .auth-image-copy h2 {
+        max-width: 100%;
+        margin-top: 4px;
+        font-size: 19px;
+        line-height: 1.15;
+        letter-spacing: -.03em;
+      }
+
+      .auth-image-copy p {
+        margin-top: 4px;
+        color: #d0d7d0;
+        font-size: 11px;
+        line-height: 1.35;
       }
 
       .auth-form-side {
-        min-height: 100dvh;
+        min-height: auto;
         height: auto;
-        padding: 88px 22px 38px;
-        display: block;
+        padding: 30px 22px 26px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background: #fff;
+        position: relative;
       }
 
       .auth-form {
         height: auto;
         max-height: none;
         overflow: visible;
-        padding-bottom: 12px;
+        margin-top: 18px;
+        padding-bottom: 0;
       }
 
       .auth-heading {
-        margin-top: 30px
+        margin-top: 22px;
       }
 
       .auth-logo {
-        top: 22px
+        position: absolute;
+        top: 18px;
+        left: 22px;
+        transform: none;
+      }
+
+      .auth-close {
+        top: 14px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        z-index: 10;
+        background: #ffffff;
       }
     }
 
@@ -3943,12 +4071,12 @@
             <p>Keep the submission, criteria and score relationship visible during review.</p>
 
             <div class="data-list" style="border-color:#343b35">
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Evidence
-                  captured</span><span>08</span></div>
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Criteria
-                  assessed</span><span>04 / 04</span></div>
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Feedback
-                  status</span><span class="green">READY</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Evidence
+                  captured</span><span class="amber mono">08</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Criteria
+                  assessed</span><span class="amber mono">04 / 04</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Feedback
+                  status</span><span class="green mono">READY</span></div>
             </div>
           </div>
 
@@ -4109,12 +4237,12 @@
             <p>Surface the strongest and weakest areas so teams know where attention is needed.</p>
 
             <div class="data-list" style="border-color:#343b35">
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Strongest
-                  domain</span><span class="green">ANALYSIS</span></div>
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Needs
-                  attention</span><span class="amber">EVIDENCE</span></div>
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Priority
-                  shift</span><span>+12%</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Strongest
+                  domain</span><span class="green mono">ANALYSIS</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Needs
+                  attention</span><span class="amber mono">EVIDENCE</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Priority
+                  shift</span><span class="green mono">+12%</span></div>
             </div>
           </div>
 
@@ -4377,12 +4505,12 @@
               systems.</p>
 
             <div class="data-list" style="border-color:#343b35">
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">First
-                  response</span><span>1 DAY</span></div>
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Workflow
-                  focus</span><span>ASSESSMENT</span></div>
-              <div class="data-list-row" style="border-color:#343b35"><span style="color:#aeb6ae">Status</span><span
-                  class="green">AVAILABLE</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">First
+                  response</span><span class="amber mono">1 DAY</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Workflow
+                  focus</span><span class="amber mono">ASSESSMENT</span></div>
+              <div class="data-list-row" style="border-color:#343b35"><span style="color:#e2e8e2">Status</span><span
+                  class="green mono">AVAILABLE</span></div>
             </div>
           </div>
 
@@ -5087,11 +5215,16 @@
       document.body.classList.remove("modal-open");
     }
 
+    /*
+      Prevent auth popups from closing when clicking backdrop overlay
+      or pressing Escape key. Popup remains visible until explicitly closed via 'X' button or submitted.
+    */
     [loginOverlay, signupOverlay].forEach(overlay => {
 
       overlay.addEventListener("click", event => {
         if (event.target === overlay) {
-          closeAuthModals();
+          event.preventDefault();
+          event.stopPropagation();
         }
       });
 
